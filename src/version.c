@@ -41,11 +41,13 @@
  */
 typedef struct
 {
-	uint32_t 	signature;		/**<Signature - to validate if header is filled */
+	uint32_t 	signature;		/**<Signature - to validate if header is valid */
 	uint8_t 	sw_major;		/**<Major SW version */
 	uint8_t 	sw_minor;		/**<Minor SW version */
 	uint8_t 	sw_dev;			/**<Develop SW version */
 	uint8_t 	sw_test;		/**<Test SW version */
+	uint32_t	app_size;		/**<Size of application - shall be calculated by post-build script */
+	uint32_t	app_crc;		/**<Application CRC32 - calculated by post-build script */
 } ver_app_header_t;
 
 /**
@@ -62,13 +64,14 @@ static const uint32_t 	gu32_sw_ver_num			= (( maj << 24 ) | ( min << 16 ) | ( de
 /**
  * 	Application header informations
  */																																				\
-static volatile const ver_app_header_t __attribute__(( section( VER_APP_HEAD_SECTION ))) g_app_header =																		\
+static volatile const ver_app_header_t __attribute__(( section( VER_APP_HEAD_SECTION ))) g_app_header =											\
 {																																				\
 	.signature 	= VER_APP_HEAD_SIGN,																											\
 	.sw_major	= maj,																															\
 	.sw_minor	= min,																															\
 	.sw_dev		= dev,																															\
-	.sw_test	= tst,																															\
+	.app_size	= 0,	/*Calculated by post-build script */																					\
+	.app_crc	= 0,	/*Calculated by post-build script */																					\
 };
 
 /**
