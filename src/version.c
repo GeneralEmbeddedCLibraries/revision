@@ -29,18 +29,56 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * 	Application header
+ *
+ * @note	Purpose of application header is to store informations
+ * 			of software in HEX output file at specific location. This
+ * 			gives you the insights of the application itself by looking
+ * 			only into output file of Intel HEX type.
+ *
+ *
+ * 	Size:
+ */
+typedef struct
+{
+	uint32_t 	signature;		/**<Signature - to validate if header is filled */
+	uint8_t 	sw_major;		/**<Major SW version */
+	uint8_t 	sw_minor;		/**<Minor SW version */
+	uint8_t 	sw_dev;			/**<Develop SW version */
+	uint8_t 	sw_test;		/**<Test SW version */
+} ver_app_header_t;
+
+/**
  * 	Software version definitions
  */
-#define VERSION_SW( maj, min, dev, tst ) \
-\
+#define VERSION_SW( maj, min, dev, tst ) 																										\
+																																				\
+/**
+ * 	Software string and number
+ */																																				\
 static const char *		gs_sw_ver_str 			= "Software Version " #maj "." #min "." #dev "." #tst "\rBuilted " __DATE__ " " __TIME__;		\
-static const uint32_t 	gu32_sw_ver_num			= (( maj << 24 ) | ( min << 16 ) | ( dev << 8 ) | ( tst ));
+static const uint32_t 	gu32_sw_ver_num			= (( maj << 24 ) | ( min << 16 ) | ( dev << 8 ) | ( tst )); 									\
+																																				\
+/**
+ * 	Application header informations
+ */																																				\
+static volatile const ver_app_header_t __attribute__(( section( VER_APP_HEAD_SECTION ))) g_app_header =																		\
+{																																				\
+	.signature 	= VER_APP_HEAD_SIGN,																											\
+	.sw_major	= maj,																															\
+	.sw_minor	= min,																															\
+	.sw_dev		= dev,																															\
+	.sw_test	= tst,																															\
+};
 
 /**
  * 	Hardware version definitions
  */
-#define VERSION_HW( maj, min, dev, tst )  \
-\
+#define VERSION_HW( maj, min, dev, tst )  																		\
+																												\
+/**
+ * 	Hardware string and number
+ */																												\
 static const char *		gs_hw_ver_str	 		= "Hardware Version " #maj "." #min "." #dev "." #tst "\r";		\
 static const uint32_t 	gu32_hw_ver_num 		= (( maj << 24 ) | ( min << 16 ) | ( dev << 8 ) | ( tst ));
 
