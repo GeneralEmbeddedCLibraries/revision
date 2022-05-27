@@ -1,10 +1,12 @@
+// Copyright (c) 2022 Ziga Miklosic
+// All Rights Reserved
+// This software is under MIT licence (https://opensource.org/licenses/MIT)
 ////////////////////////////////////////////////////////////////////////////////
 /*!
 *@file      version.h
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
-*@date      20.04.2022
-*@project	Angle simulator
+*@date      25.05.2022
 */
 ////////////////////////////////////////////////////////////////////////////////
 /*!

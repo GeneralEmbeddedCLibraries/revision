@@ -1,9 +1,12 @@
+// Copyright (c) 2022 Ziga Miklosic
+// All Rights Reserved
+// This software is under MIT licence (https://opensource.org/licenses/MIT)
 ////////////////////////////////////////////////////////////////////////////////
 /*!
 *@file      version.h
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
-*@date      20.04.2022
+*@date      27.05.2022
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -26,7 +29,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 uint32_t 		version_get_sw		(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
 uint32_t 		version_get_hw		(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
-
 const char*		version_get_sw_str	(void);
 const char*		version_get_hw_str	(void);
 
