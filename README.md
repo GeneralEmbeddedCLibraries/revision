@@ -76,13 +76,42 @@ MEMORY
 NOTE: Don't forget to reduce size of FLASH memory in order to fit in application header!
 
 ### **Creating memory section**
+Under sections inside linker script add new section for application header. Note that name of symbol inside section must match value of ***VER_APP_HEAD_SECTION*** specified inside ***ver_cfg.h***.
 
-### **Using in code**
+1. Add new section inside linker script:
+```
+/* Sections */
+SECTIONS
+{
 
-TODO: Describe how to add section for application header
+    /* A lot of stuff before... */
+
+
+    /* Application header section */
+    .app_header :
+    {
+    APP_HEADER_START = .;
+    *(.app_header)				/*Application header */
+    *(.app_header*)				/*Application header */
+    KEEP (*(.app_header*))
+    APP_HEADER_END = .;
+    } >APP_HEADER
+
+
+    /* A lot of stuff after... */
+}
+
+```
+
+2. Change configuration inside ***ver_cfg.h*** to match linker settings:
+```C
+/**
+ * 	Section name of app header
+ */
+#define VER_APP_HEAD_SECTION			( ".app_header" )
+```
 
 ## Post-Build script
-Post-script is created
-TODO: Needs to be implemented and tested
+TBD: ...
 
 
