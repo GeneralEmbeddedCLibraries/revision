@@ -37,7 +37,7 @@
  * 			only into output file of Intel HEX type.
  *
  *
- * 	Size:
+ * 	Size: 16 bytes
  */
 typedef struct
 {
@@ -64,7 +64,7 @@ static const uint32_t 	gu32_sw_ver_num			= (( maj << 24 ) | ( min << 16 ) | ( de
 /**
  * 	Application header informations
  */																																				\
-static volatile const ver_app_header_t __attribute__(( section( VER_APP_HEAD_SECTION ))) g_app_header =											\
+static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SECTION ))) g_app_header =										\
 {																																				\
 	.signature 	= VER_APP_HEAD_SIGN,																											\
 	.sw_major	= maj,																															\
