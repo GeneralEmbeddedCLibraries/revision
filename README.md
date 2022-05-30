@@ -122,7 +122,8 @@ SECTIONS
 #define VER_APP_HEAD_SECTION			( ".app_header" )
 ```
 
-## Post-Build script
-TBD: ...
+## Todo List
+ - [ ] Automation script/cmd for calculation of app size and crc
+ - [ ] Call of script via Makefile as part of a post-build process
 
 
