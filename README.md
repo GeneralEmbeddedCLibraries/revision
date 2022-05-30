@@ -11,7 +11,7 @@ Software and hardware version can be changed in configuration file ***ver_cfg.h*
 #define VER_SW_MAJOR			( 0 )
 #define VER_SW_MINOR			( 5 )
 #define VER_SW_DEVELOP			( 1 )
-#define VER_SW_TEST				( 0 )
+#define VER_SW_TEST			( 0 )
 
 /******************************************************************************
  * 	SET HARDWARE VERSION
@@ -19,7 +19,7 @@ Software and hardware version can be changed in configuration file ***ver_cfg.h*
 #define VER_HW_MAJOR			( 1 )
 #define VER_HW_MINOR			( 0 )
 #define VER_HW_DEVELOP			( 1 )
-#define VER_HW_TEST				( 0 )
+#define VER_HW_TEST			( 0 )
 ```
 
 ### **Version notation guideline**
