@@ -50,7 +50,7 @@
  *
  * 	@note	Must be 32-bit is size!
  */
-#define VER_APP_HEAD_SIGN				((uint32_t)( 0xAAAA5555UL ))
+#define VER_APP_HEAD_SIGN				((uint32_t)( 0xDEC0CEFAUL ))
 
 /**
  * 	Section name of app header
