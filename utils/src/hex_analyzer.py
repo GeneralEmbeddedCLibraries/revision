@@ -71,9 +71,10 @@ def arg_parser():
                                         epilog="Enjoy the program!")
 
     # Add arguments
-    parser.add_argument("-v",   help="get version", action="store_true" , required=False )
-    parser.add_argument("-f",   help="HEX file", metavar="hex_file", type=str, required=False )
-    parser.add_argument("-i",   help="get HEX info from application hader", metavar="app_header_addr", type=str, required=False )
+    parser.add_argument("-v",   help="get version",                             action="store_true" ,                  required=False )
+    parser.add_argument("-f",   help="HEX file",                                metavar="hex_file",        type=str,   required=False )
+    parser.add_argument("-ha",  help="application header HEX file location",    metavar="app_header_addr", type=str,   required=False )
+    parser.add_argument("-ba",  help="build info HEX file location",            metavar="build_info_addr", type=str,   required=False )
 
     # Get args
     args = parser.parse_args()
@@ -81,7 +82,13 @@ def arg_parser():
     # Convert namespace to dict
     args = vars(args)
 
-    return args["f"], args["i"], args["v"]
+    # Get arguments
+    file_name       = args["f"]
+    ver_flag        = args["v"]
+    app_head_addr   = args["ha"]
+    build_info_addr = args["ha"]
+
+    return file_name, ver_flag, app_head_addr, build_info_addr
 
 # ===============================================================================
 # @brief: Get tool version
@@ -92,13 +99,13 @@ def print_script_version():
     print("Revision tool version: %s" % SCRIPT_VER)
 
 # ===============================================================================
-# @brief: Initialize function generator object
+# @brief: Parse and print infor of application header
 #
 # @param[in]:    file   - HEX inputed file 
 # @param[in]:    addr   - Application header address inside HEX file
 # @return:       void
 # ===============================================================================
-def hex_info_actions(file, addr):
+def parse_and_print_app_header(file, addr):
     print("")
     print("Parsing <%s>..." % file)
 
@@ -150,6 +157,20 @@ def hex_info_actions(file, addr):
 
 
 # ===============================================================================
+# @brief: Parse and print build information
+#
+#       Read till NULL termination!
+#
+# @param[in]:    file   - HEX inputed file 
+# @param[in]:    addr   - Build info address inside HEX file
+# @return:       void
+# ===============================================================================
+def parse_and_print_build_info(file, addr):
+    pass
+
+
+
+# ===============================================================================
 # @brief:   Main entry
 #
 # @return:       void
@@ -157,21 +178,35 @@ def hex_info_actions(file, addr):
 def main():
 
     # Get invocation arguments
-    hex_file, info_addr, crc_l, ver_f = arg_parser()
+    file_name, ver_flag, app_head_addr, build_info_addr = arg_parser()
 
     # Version infor
-    if ver_f:
+    if ver_flag:
         print_script_version()
 
     # Hex file info
-    elif info_addr is not None:
+    else:
+        
+        # Get application header information request
+        if app_head_addr is not None:
 
-        # Convert to hex
-        info_addr = int(info_addr, 16)
+            # Convert to hex
+            app_head_addr = int( app_head_addr, 16 )
 
-        # Get hex info actions
-        hex_info_actions(hex_file, info_addr)
+            # Get hex info actions
+            parse_and_print_app_header( file_name, app_head_addr )
 
+
+        # Get build information request
+        if build_info_addr is not None:
+
+            # Convert to hex
+            build_info_addr = int( build_info_addr, 16 )
+
+            # Get hex info actions
+            parse_and_print_build_info( file_name, build_info_addr )
+
+        
     
 # ===============================================================================
 #       CLASSES

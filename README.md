@@ -101,7 +101,7 @@ MEMORY
   BUILD_INFO (r)  : ORIGIN = BUILD_INFO_ADDR,   LENGTH = BUILD_INFO_SIZE		
 }
 ```
-NOTE: Don't forget to reduce size of FLASH memory in order to fit in application header!
+NOTE: Don't forget to reduce size of FLASH memory in order to fit in user defined memory regions!
 
 ### **Creating memory section**
 Under sections inside linker script add new section for application header. Note that name of symbol inside section must match value of ***VER_APP_HEAD_SECTION*** specified inside ***ver_cfg.h***.
