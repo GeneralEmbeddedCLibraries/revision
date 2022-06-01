@@ -1,9 +1,9 @@
 # ===============================================================================
-# @file:    revision_tool.py
-# @note:    This sript is for manipulation of HEX files
+# @file:    hex_analyzer.py
+# @note:    This sript is for acquiring informations from HEX file
 # @author:  Ziga Miklosic
-# @date:    31.05.2022
-# @brief:   
+# @date:    01.06.2022
+# @brief:   HEX file must has predefined format
 # ===============================================================================
 
 # ===============================================================================
@@ -49,25 +49,15 @@ APP_HEADER_CRC_OFFSET           = 12
 
 
 
+
 # Tool description
 TOOL_DESCRIPTION = \
-"revision_tool.py %s \
-This tool has multiple functionalities:\
- 1. Parsing application header\
- 2. Calculation of application size and CRC" % SCRIPT_VER
-
-# Git commands
-GIT_USER_NAME_CMD       = "git config user.name"
-GIT_USER_EMAIL_CMD      = "git config user.email"
-GIT_CURRENT_BRANCH_CMD  = "git rev-parse --abbrev-ref HEAD"
-GIT_WORKTREE_STATUS     = "git status --porcelain"
-
+"hex_analyzer.py %s" % SCRIPT_VER
 
 
 # ===============================================================================
 #       FUNCTIONS
 # ===============================================================================
-
 
 # ===============================================================================
 # @brief:   Argument parser
@@ -83,8 +73,7 @@ def arg_parser():
     # Add arguments
     parser.add_argument("-v",   help="get version", action="store_true" , required=False )
     parser.add_argument("-f",   help="HEX file", metavar="hex_file", type=str, required=False )
-    parser.add_argument("-i",   help="get HEX info from application hader", metavar="app_header_addr", type=str,    required=False )
-    parser.add_argument("-crc",	help="calculate and add CRC to app header", nargs=3, metavar=("start_addr", "stop_addr", "app_header_addr"),  required=False )
+    parser.add_argument("-i",   help="get HEX info from application hader", metavar="app_header_addr", type=str, required=False )
 
     # Get args
     args = parser.parse_args()
@@ -92,7 +81,7 @@ def arg_parser():
     # Convert namespace to dict
     args = vars(args)
 
-    return args["f"], args["i"], args["crc"], args["v"]
+    return args["f"], args["i"], args["v"]
 
 # ===============================================================================
 # @brief: Get tool version
@@ -160,10 +149,6 @@ def hex_info_actions(file, addr):
     print("-------------------------------------------------------------")
 
 
-
-def crc_calc_actions():
-    print("Calculating CRC value...")
-
 # ===============================================================================
 # @brief:   Main entry
 #
@@ -187,9 +172,6 @@ def main():
         # Get hex info actions
         hex_info_actions(hex_file, info_addr)
 
-    # CRC calculations
-    elif crc_l:
-        crc_calc_actions()
     
 # ===============================================================================
 #       CLASSES
