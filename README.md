@@ -76,12 +76,29 @@ In order to put application header at specified location new memory layout needs
 
 Add new section to memory layout:
 ```
+/*******************************************************************************
+*		USER DEFINED MEMORY LOCATIONS 
+*******************************************************************************/
+
+/* Application header address & size */
+APP_HEADER_ADDR	= 0x08020000;
+APP_HEADER_SIZE	= 16;	/*bytes*/
+
+/* Build informations address & size */
+BUILD_INFO_ADDR	= ( 0x08020000 + APP_HEADER_SIZE );
+BUILD_INFO_SIZE	= 2048;	/*bytes*/
+
+/* Total size of all user define regions */
+USER_REGION_SIZE = ( APP_HEADER_SIZE + BUILD_INFO_SIZE );
+
+
 /* Memories definition */
 MEMORY
 {
-  RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 64K
-  FLASH   (rx)    : ORIGIN = 0x08000000,   LENGTH = 512K-16
-  APP_HEADER (r)  : ORIGIN = 0x08020000,   LENGTH = 16			/* Application header */
+  RAM    (xrw)    : ORIGIN = 0x20000000,   		LENGTH = 64K
+  FLASH   (rx)    : ORIGIN = 0x08000000,   		LENGTH = 512K-USER_REGION_SIZE
+  APP_HEADER (r)  : ORIGIN = APP_HEADER_ADDR,   LENGTH = APP_HEADER_SIZE			
+  BUILD_INFO (r)  : ORIGIN = BUILD_INFO_ADDR,   LENGTH = BUILD_INFO_SIZE		
 }
 ```
 NOTE: Don't forget to reduce size of FLASH memory in order to fit in application header!
