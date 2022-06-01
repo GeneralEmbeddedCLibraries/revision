@@ -96,7 +96,7 @@ def arg_parser():
 # @return:       void
 # ===============================================================================
 def print_script_version():
-    print("Revision tool version: %s" % SCRIPT_VER)
+    print("Script version: %s" % SCRIPT_VER)
 
 # ===============================================================================
 # @brief: Parse and print infor of application header
