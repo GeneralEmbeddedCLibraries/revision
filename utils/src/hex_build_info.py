@@ -32,7 +32,7 @@ HEX_FILE_LITTLE_ENDIAN = True
 STRING_TERMINATION = "\x00"
 
 # New line
-NEWLINE = "\r\n"
+NEWLINE = "\n"
 
 
 
