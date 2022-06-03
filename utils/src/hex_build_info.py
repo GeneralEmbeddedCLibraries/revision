@@ -9,6 +9,7 @@
 # ===============================================================================
 #       IMPORTS  
 # ===============================================================================
+from distutils.command.build import build
 import sys
 import os
 import subprocess
@@ -100,7 +101,15 @@ def arg_parser():
 def print_script_version():
     print("Script version: %s" % SCRIPT_VER)
 
-
+# ===============================================================================
+# @brief: Create build info
+#
+# @param[in]:   sw_proj_name    - SW project name
+# @param[in]:   build_cfg       - Build configuration
+# @param[in]:   pc_name         - Name of PC where SW is being build
+# @param[in]:   host_os         - Host PC OS name
+# @return:      void
+# ===============================================================================
 def create_build_info(sw_proj_name, build_cfg, pc_name, host_os):
 
     git_name        = subprocess.check_output( GIT_USER_NAME_CMD ).decode("utf-8")[:-1] 
@@ -124,8 +133,20 @@ def create_build_info(sw_proj_name, build_cfg, pc_name, host_os):
     "Git status: \t"        + str(git_worktree)         + NEWLINE +\
     STRING_TERMINATION;
 
-
     return build_info_str
+
+def write_build_info(file, addr, build_info):
+
+    print("File: %s" % file)
+    print("Addr: 0x%08X" % addr)
+
+    # Create and load hex file
+    ih = IntelHex(file)
+
+    for offset, char in enumerate(build_info):
+        ih[addr+offset] = char
+
+
 
 
 # ===============================================================================
@@ -157,7 +178,7 @@ def main():
             print( "Build info: %s" % build_info_str )
 
             # Write to hex
-            # TODO: ....
+            write_build_info( file_name, build_info_addr, build_info_str )
 
     
 # ===============================================================================
