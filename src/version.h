@@ -7,7 +7,7 @@
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
 *@date      27.05.2022
-*@version	V1.0.0
+*@version	V1.1.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -33,7 +33,7 @@
  * 	Module version
  */
 #define VER_VER_MAJOR		( 1 )
-#define VER_VER_MINOR		( 0 )
+#define VER_VER_MINOR		( 1 )
 #define VER_VER_DEVELOP		( 0 )
 
 ////////////////////////////////////////////////////////////////////////////////
