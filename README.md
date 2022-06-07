@@ -154,6 +154,8 @@ This command will run ***hex_build_info.py*** and will put build informations to
 
 ## Todo List
  - [ ] Automation script/cmd for calculation of app size and crc
- - [ ] Call of script via Makefile as part of a post-build process
+ - [ ] Automation script for acquire build info and writes it into HEX output file
+ - [ ] API function to get build info
+ - [ ] Usage of build info by user choise via configuration file
 
 
