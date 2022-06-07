@@ -7,7 +7,7 @@
 *@brief     Configuration file for revision of software & hardware
 *@author    Ziga Miklosic
 *@date      27.05.2022
-*@version	V1.0.0
+*@version	V1.1.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -20,25 +20,24 @@
 #ifndef __VERSION_CFG_H_
 #define __VERSION_CFG_H_
 
-
 // USER CODE BEGIN...
 
 
 /******************************************************************************
  * 	SET SOFTWARE VERSION
  *****************************************************************************/
-#define VER_SW_MAJOR			( 0 )
-#define VER_SW_MINOR			( 5 )
-#define VER_SW_DEVELOP			( 1 )
-#define VER_SW_TEST				( 0 )
+#define VER_SW_MAJOR		0
+#define VER_SW_MINOR		5
+#define VER_SW_DEVELOP		1
+#define VER_SW_TEST			0
 
 /******************************************************************************
  * 	SET HARDWARE VERSION
  *****************************************************************************/
-#define VER_HW_MAJOR			( 1 )
-#define VER_HW_MINOR			( 0 )
-#define VER_HW_DEVELOP			( 1 )
-#define VER_HW_TEST				( 0 )
+#define VER_HW_MAJOR		1
+#define VER_HW_MINOR		0
+#define VER_HW_DEVELOP		1
+#define VER_HW_TEST			0
 
 
 /******************************************************************************
@@ -50,7 +49,7 @@
  *
  * 	@note	Must be 32-bit is size!
  */
-#define VER_APP_HEAD_SIGN				((uint32_t)( 0xAAAA5555UL ))
+#define VER_APP_HEAD_SIGN				((uint32_t)( 0xFACEC0DEUL ))
 
 /**
  * 	Section name of app header

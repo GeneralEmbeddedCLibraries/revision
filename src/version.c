@@ -7,7 +7,7 @@
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
 *@date      25.05.2022
-*@version	V1.0.0
+*@version	V1.1.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /*!
@@ -28,6 +28,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * 	Convert value to string
+ */
+#define VER_STR_HELPER(x) 		#x
+#define VER_STR(x) 				VER_STR_HELPER(x)
 
 /**
  * 	Application header
@@ -52,50 +58,30 @@ typedef struct
 } ver_app_header_t;
 
 /**
- * 	Software version definitions
- */
-#define VERSION_SW( maj, min, dev, tst ) 																										\
-																																				\
-/**
  * 	Software string and number
- */																																				\
-static const char *		gs_sw_ver_str 			= "Software Version " #maj "." #min "." #dev "." #tst "\rBuilted " __DATE__ " " __TIME__;		\
-static const uint32_t 	gu32_sw_ver_num			= (( maj << 24 ) | ( min << 16 ) | ( dev << 8 ) | ( tst )); 									\
-																																				\
+ */
+static const char *		gs_sw_ver_str 			= "Software Version " VER_STR(VER_SW_MAJOR) "." VER_STR(VER_SW_MINOR) "." VER_STR(VER_SW_DEVELOP) "." VER_STR(VER_SW_TEST) "\rBuilted " __DATE__ " " __TIME__;
+static const uint32_t 	gu32_sw_ver_num			= (( VER_SW_MAJOR << 24 ) | ( VER_SW_MINOR << 16 ) | ( VER_SW_DEVELOP << 8 ) | ( VER_SW_TEST ));
+
 /**
  * 	Application header informations
- */																																				\
-static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SECTION ))) g_app_header =										\
-{																																				\
-	.signature 	= VER_APP_HEAD_SIGN,																											\
-	.sw_major	= maj,																															\
-	.sw_minor	= min,																															\
-	.sw_dev		= dev,																															\
-	.app_size	= 0,	/*Calculated by post-build script */																					\
-	.app_crc	= 0,	/*Calculated by post-build script */																					\
+ */
+static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SECTION ))) g_app_header =
+{
+	.signature 	= VER_APP_HEAD_SIGN,
+	.sw_major	= VER_SW_MAJOR,
+	.sw_minor	= VER_SW_MINOR,
+	.sw_dev		= VER_SW_DEVELOP,
+	.sw_test	= VER_SW_TEST,
+	.app_size	= 0,	/*Calculated by post-build script */
+	.app_crc	= 0,	/*Calculated by post-build script */
 };
 
 /**
- * 	Hardware version definitions
- */
-#define VERSION_HW( maj, min, dev, tst )  																		\
-																												\
-/**
  * 	Hardware string and number
- */																												\
-static const char *		gs_hw_ver_str	 		= "Hardware Version " #maj "." #min "." #dev "." #tst "\r";		\
-static const uint32_t 	gu32_hw_ver_num 		= (( maj << 24 ) | ( min << 16 ) | ( dev << 8 ) | ( tst ));
-
-/**
- * 	Set SW version
  */
-VERSION_SW( VER_SW_MAJOR, VER_SW_MINOR, VER_SW_DEVELOP, VER_SW_TEST );
-
-/**
- * 	Set HW version
- */
-VERSION_HW( VER_HW_MAJOR, VER_HW_MINOR, VER_HW_DEVELOP, VER_HW_TEST );
-
+static const char *		gs_hw_ver_str	 		= "Hardware Version " VER_STR(VER_HW_MAJOR) "." VER_STR(VER_HW_MINOR) "." VER_STR(VER_HW_DEVELOP) "." VER_STR(VER_HW_TEST) "\r";
+static const uint32_t 	gu32_hw_ver_num 		= (( VER_HW_MAJOR << 24 ) | ( VER_HW_MINOR << 16 ) | ( VER_HW_DEVELOP << 8 ) | ( VER_HW_TEST ));
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions

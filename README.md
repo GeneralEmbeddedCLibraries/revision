@@ -19,18 +19,18 @@ Software and hardware version can be changed in configuration file ***ver_cfg.h*
 /******************************************************************************
  * 	SET SOFTWARE VERSION
  *****************************************************************************/
-#define VER_SW_MAJOR			( 0 )
-#define VER_SW_MINOR			( 5 )
-#define VER_SW_DEVELOP			( 1 )
-#define VER_SW_TEST			( 0 )
+#define VER_SW_MAJOR      0
+#define VER_SW_MINOR      5
+#define VER_SW_DEVELOP    1
+#define VER_SW_TEST       0
 
 /******************************************************************************
  * 	SET HARDWARE VERSION
  *****************************************************************************/
-#define VER_HW_MAJOR			( 1 )
-#define VER_HW_MINOR			( 0 )
-#define VER_HW_DEVELOP			( 1 )
-#define VER_HW_TEST			( 0 )
+#define VER_HW_MAJOR      1
+#define VER_HW_MINOR      0
+#define VER_HW_DEVELOP    1
+#define VER_HW_TEST       0
 ```
 
 ### **Version notation guideline**
@@ -76,15 +76,32 @@ In order to put application header at specified location new memory layout needs
 
 Add new section to memory layout:
 ```
+/*******************************************************************************
+*		USER DEFINED MEMORY LOCATIONS 
+*******************************************************************************/
+
+/* Application header address & size */
+APP_HEADER_ADDR	= 0x08020000;
+APP_HEADER_SIZE	= 16;	/*bytes*/
+
+/* Build informations address & size */
+BUILD_INFO_ADDR	= ( 0x08020000 + APP_HEADER_SIZE );
+BUILD_INFO_SIZE	= 2048;	/*bytes*/
+
+/* Total size of all user define regions */
+USER_REGION_SIZE = ( APP_HEADER_SIZE + BUILD_INFO_SIZE );
+
+
 /* Memories definition */
 MEMORY
 {
-  RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 64K
-  FLASH   (rx)    : ORIGIN = 0x08000000,   LENGTH = 512K-16
-  APP_HEADER (r)  : ORIGIN = 0x08020000,   LENGTH = 16			/* Application header */
+  RAM    (xrw)    : ORIGIN = 0x20000000,   		LENGTH = 64K
+  FLASH   (rx)    : ORIGIN = 0x08000000,   		LENGTH = 512K-USER_REGION_SIZE
+  APP_HEADER (r)  : ORIGIN = APP_HEADER_ADDR,   LENGTH = APP_HEADER_SIZE			
+  BUILD_INFO (r)  : ORIGIN = BUILD_INFO_ADDR,   LENGTH = BUILD_INFO_SIZE		
 }
 ```
-NOTE: Don't forget to reduce size of FLASH memory in order to fit in application header!
+NOTE: Don't forget to reduce size of FLASH memory in order to fit in user defined memory regions!
 
 ### **Creating memory section**
 Under sections inside linker script add new section for application header. Note that name of symbol inside section must match value of ***VER_APP_HEAD_SECTION*** specified inside ***ver_cfg.h***.
@@ -122,8 +139,23 @@ SECTIONS
 #define VER_APP_HEAD_SECTION			( ".app_header" )
 ```
 
+## **Build Informations**
+
+### **Guide for STM32Cube IDE**
+
+In order to automate process of inserting build information into outputed HEX file go to: *Properties->C/C++Build->Settings->BuildSteps*
+
+Paste folowing command under Post-Build steps:
+```
+python ..\my_src\revision\revision\utils\src\hex_build_info.py -f${ConfigName}\${ProjName}.hex -ba 0x08020020 -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
+```
+
+This command will run ***hex_build_info.py*** and will put build informations to 0x08020020 locations inside specified outputed HEX file.
+
 ## Todo List
  - [ ] Automation script/cmd for calculation of app size and crc
- - [ ] Call of script via Makefile as part of a post-build process
+ - [ ] Automation script for acquire build info and writes it into HEX output file
+ - [ ] API function to get build info
+ - [ ] Usage of build info by user choise via configuration file
 
 
