@@ -72,6 +72,7 @@ static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SE
 	.sw_major	= VER_SW_MAJOR,
 	.sw_minor	= VER_SW_MINOR,
 	.sw_dev		= VER_SW_DEVELOP,
+	.sw_test	= VER_SW_TEST,
 	.app_size	= 0,	/*Calculated by post-build script */
 	.app_crc	= 0,	/*Calculated by post-build script */
 };
