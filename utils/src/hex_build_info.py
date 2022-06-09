@@ -137,9 +137,6 @@ def create_build_info(sw_proj_name, build_cfg, pc_name, host_os):
 
 def write_build_info(file, addr, build_info):
 
-    print("File: %s" % file)
-    print("Addr: 0x%08X" % addr)
-
     # Create and load hex file
     ih = IntelHex(file)
 
@@ -179,10 +176,14 @@ def main():
             # Create
             build_info_str = create_build_info(sw_proj_name, build_cfg, pc_name, host_os)
 
-            print( "Build info: %s" % build_info_str )
-
             # Write to hex
             write_build_info( file_name, build_info_addr, build_info_str )
+
+            print("")
+            print("====================================================================")
+            print("     HEX BUILD INFO TOOL %s" % SCRIPT_VER )
+            print("====================================================================")
+            print("Build information successfully inserted to %s at 0x%08X!" % (file_name, build_info_addr))
 
     
 # ===============================================================================

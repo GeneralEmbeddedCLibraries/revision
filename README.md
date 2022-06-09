@@ -147,7 +147,7 @@ In order to automate process of inserting build information into outputed HEX fi
 
 Paste folowing command under Post-Build steps:
 ```
-python ..\my_src\revision\revision\utils\src\hex_build_info.py -f${ConfigName}\${ProjName}.hex -ba 0x08020020 -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
+python ..\my_src\revision\revision\utils\src\hex_build_info.py -f ..\${ConfigName}\${ProjName}.hex -ba 0x08020020 -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
 ```
 
 This command will run ***hex_build_info.py*** and will put build informations to 0x08020020 locations inside specified outputed HEX file.
