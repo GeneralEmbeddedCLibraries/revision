@@ -33,7 +33,7 @@ HEX_FILE_LITTLE_ENDIAN = True
 STRING_TERMINATION = "\x00"
 
 # New line
-NEWLINE = "\n"
+NEWLINE = "\n\r"
 
 
 
@@ -143,10 +143,14 @@ def write_build_info(file, addr, build_info):
     # Create and load hex file
     ih = IntelHex(file)
 
-    for offset, char in enumerate(build_info):
-        ih[addr+offset] = char
+    # Store build info
+    for offset, char in enumerate(build_info):       
+        
+        # Convert string to ascii character
+        ih[addr+offset] = ord(char)
 
-
+    # Write to file
+    ih.tofile(file, format="hex")
 
 
 # ===============================================================================
