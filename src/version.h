@@ -47,7 +47,7 @@ const char*		version_get_sw_str	(void);
 const char*		version_get_hw_str	(void);
 
 #if ( 1 == VER_CFG_USE_PROJ_INFO_EN )
-	const char* version_proj_info_get_str(void);
+	const char* version_get_proj_info_str(void);
 #endif
 
 #endif // __VERSION_H_

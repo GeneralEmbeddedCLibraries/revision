@@ -166,7 +166,8 @@ def write_c_file_header(file):
     file.write("/**\n")
     file.write(" *   Project information string\n")
     file.write(" */\n")
-    file.write("static volatile const char __attribute__ (( section( VER_APP_PROJ_INFO_SECTION ))) gs_proj_info[VER_APP_PROJ_INFO_SIZE] = \"\\\n")
+    #file.write("static volatile const char __attribute__ (( section( VER_APP_PROJ_INFO_SECTION ))) gs_proj_info[VER_APP_PROJ_INFO_SIZE] = \"\\\n")
+    file.write("static volatile const char gs_proj_info[VER_APP_PROJ_INFO_SIZE] = \"\\\n")
 
 
 def write_c_file_footer(file):
@@ -183,9 +184,9 @@ def write_c_file_footer(file):
     file.write(" * @return 		gs_proj_info - Project information string\n")
     file.write(" */\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
-    file.write("const char* version_proj_info_get_str(void)\n")
+    file.write("const char* version_get_proj_info_str(void)\n")
     file.write("{\n")
-    file.write("    return (const char*) &gs_proj_info;\n")
+    file.write("    return (const char*) gs_proj_info;\n")
     file.write("}\n")
     file.write("\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")

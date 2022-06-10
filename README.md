@@ -85,11 +85,11 @@ APP_HEADER_ADDR	= 0x08020000;
 APP_HEADER_SIZE	= 16;	/*bytes*/
 
 /* Build informations address & size */
-BUILD_INFO_ADDR	= ( 0x08020000 + APP_HEADER_SIZE );
-BUILD_INFO_SIZE	= 2048;	/*bytes*/
+PROJ_INFO_ADDR	= ( 0x08020000 + APP_HEADER_SIZE );
+PROJ_INFO_SIZE	= 2048;	/*bytes*/
 
 /* Total size of all user define regions */
-USER_REGION_SIZE = ( APP_HEADER_SIZE + BUILD_INFO_SIZE );
+USER_REGION_SIZE = ( APP_HEADER_SIZE + PROJ_INFO_SIZE );
 
 
 /* Memories definition */
@@ -97,8 +97,8 @@ MEMORY
 {
   RAM    (xrw)    : ORIGIN = 0x20000000,   		LENGTH = 64K
   FLASH   (rx)    : ORIGIN = 0x08000000,   		LENGTH = 512K-USER_REGION_SIZE
-  APP_HEADER (r)  : ORIGIN = APP_HEADER_ADDR,   LENGTH = APP_HEADER_SIZE			
-  BUILD_INFO (r)  : ORIGIN = BUILD_INFO_ADDR,   LENGTH = BUILD_INFO_SIZE		
+  APP_HEADER (r)  : ORIGIN = APP_HEADER_ADDR, LENGTH = APP_HEADER_SIZE			
+  PROJ_INFO (r)   : ORIGIN = PROJ_INFO_ADDR,  LENGTH = PROJ_INFO_SIZE		
 }
 ```
 NOTE: Don't forget to reduce size of FLASH memory in order to fit in user defined memory regions!
@@ -139,18 +139,20 @@ SECTIONS
 #define VER_APP_HEAD_SECTION			( ".app_header" )
 ```
 
-## **Build Informations**
+## **Project Informations**
 
 ### **Guide for STM32Cube IDE**
 
-In order to automate process of generate build information go to: *Properties->C/C++Build->Settings->BuildSteps*
+In order to automate process of generate project information go to: *Properties->C/C++Build->Settings->BuildSteps*
 
 Paste folowing command under Pre-Build steps:
 ```
-python ../my_src/revision/revision/utils/src/hex_build_info.py -f ../my_src/revision/revision/src/build_info.c -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
+python ../my_src/revision/revision/utils/src/proj_info.py -f ../my_src/revision/revision/src/proj_info.c -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
 ```
 
-This command will run ***hex_build_info.py*** and will put build informations to 0x08020020 locations inside specified outputed HEX file.
+Given example will generate ***proj_info.c** file where additional project inforamtion string is being defined. 
+
+NOTICE: Make sure to have ***VER_CFG_USE_PROJ_INFO_EN*** macro set to 1 when using project informations!
 
 ## Todo List
  - [ ] Automation script/cmd for calculation of app size and crc
