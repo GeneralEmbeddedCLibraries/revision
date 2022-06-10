@@ -143,11 +143,11 @@ SECTIONS
 
 ### **Guide for STM32Cube IDE**
 
-In order to automate process of inserting build information into outputed HEX file go to: *Properties->C/C++Build->Settings->BuildSteps*
+In order to automate process of generate build information go to: *Properties->C/C++Build->Settings->BuildSteps*
 
-Paste folowing command under Post-Build steps:
+Paste folowing command under Pre-Build steps:
 ```
-python ..\my_src\revision\revision\utils\src\hex_build_info.py -f ..\${ConfigName}\${ProjName}.hex -ba 0x08020020 -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
+python ../my_src/revision/revision/utils/src/hex_build_info.py -f ../my_src/revision/revision/src/build_info.c -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
 ```
 
 This command will run ***hex_build_info.py*** and will put build informations to 0x08020020 locations inside specified outputed HEX file.
