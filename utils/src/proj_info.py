@@ -1,9 +1,11 @@
 # ===============================================================================
-# @file:    build_info.py
-# @note:    This sript generated build info
+# @file:    proj_info.py
+# @note:    This sript generates detailed project informations
 # @author:  Ziga Miklosic
 # @date:    01.06.2022
-# @brief:      
+# @brief:   This script takes project & git info and stores it into
+#           C source file. Therefore project info can be read later on
+#           from device in run-time 
 # ===============================================================================
 
 # ===============================================================================
@@ -13,9 +15,7 @@ from distutils.command.build import build
 import sys
 import os
 import subprocess
-
 import argparse
-from intelhex import IntelHex
 
 # ===============================================================================
 #       SCRIPT VERSIONING
@@ -26,12 +26,12 @@ SCRIPT_VER = "V0.0.1"
 HEX_FILE_LITTLE_ENDIAN = True
 
 # ===============================================================================
-#       BUILD INFO SETTINGS
+#       PROJ INFO SETTINGS
 # ===============================================================================
 
-# Build info max. string size
+# Proj info max. string size
 # Unit: byte
-BUILD_INFO_STRING_SIZE = 2048
+PROJ_INFO_STRING_SIZE = 2048
 
 # End string termination
 STRING_TERMINATION = ""   
@@ -48,8 +48,7 @@ GIT_COMMIT_SHA_CMD      = "git rev-parse --short HEAD"
 
 # Tool description
 TOOL_DESCRIPTION = \
-"build_info.py %s" % SCRIPT_VER
-
+"proj_info.py %s" % SCRIPT_VER
 
 # ===============================================================================
 #       FUNCTIONS
@@ -68,8 +67,7 @@ def arg_parser():
                                         epilog="Enjoy the program!")
 
     # Add arguments
-    parser.add_argument("-v",   help="get version",                     action="store_true" ,                   required=False )
-    parser.add_argument("-f",   help="build info file",                 metavar="build_info_file",  type=str,   required=False )
+    parser.add_argument("-f",   help="proj info file",                  metavar="proj_info_file",  type=str,   required=False )
     parser.add_argument("-n",   help="software project name",           metavar="name",             type=str,   required=False )
     parser.add_argument("-c",   help="used build configuration",        metavar="build_cfg",        type=str,   required=False )
     parser.add_argument("-pc",  help="computer name",                   metavar="pc_name",          type=str,   required=False )
@@ -82,22 +80,13 @@ def arg_parser():
     args = vars(args)
 
     # Get arguments
-    ver_flag        = args["v"]
     file            = args["f"]
     sw_proj_name    = args["n"]
     build_cfg       = args["c"]
     pc_name         = args["pc"]
     host_os         = args["os"]
 
-    return ver_flag, file, sw_proj_name, build_cfg, pc_name, host_os
-
-# ===============================================================================
-# @brief: Get tool version
-#
-# @return:       void
-# ===============================================================================
-def print_script_version():
-    print("Script version: %s" % SCRIPT_VER)
+    return file, sw_proj_name, build_cfg, pc_name, host_os
 
 # ===============================================================================
 # @brief: Create build info
@@ -146,14 +135,14 @@ def write_c_file_header(file):
     file.write("// This software is under MIT licence (https://opensource.org/licenses/MIT)\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write("/*!\n")
-    file.write("*@file      build_info.c\n")
-    file.write("*@brief     Build informations\n")
+    file.write("*@file      proj_info.c\n")
+    file.write("*@brief     Project informations\n")
     file.write("*@author    Ziga Miklosic\n")
     file.write("*@date      xx.xx.xxxx\n")
     file.write("*/\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write("/*!\n")
-    file.write(" * @addtogroup BUILD_INFO\n")
+    file.write(" * @addtogroup PROJ_INFO\n")
     file.write(" * @{ <!-- BEGIN GROUP -->\n")
     file.write(" */\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
@@ -164,26 +153,20 @@ def write_c_file_header(file):
     file.write("#include <stdint.h>\n")
     file.write("#include <stdlib.h>\n")
     file.write("\n")
-    file.write("#include \"build_info.h\"\n")
+    file.write("#include \"../../version_cfg.h\"\n")
     file.write("\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write("// Definitions\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
-    file.write("\n")
-    file.write("/**\n")
-    file.write(" *   Total size of build information string\n")
-    file.write(" */\n")
-    file.write("#define BUILD_INFO_STRING_SIZE      ( %s )\n" % BUILD_INFO_STRING_SIZE)
-    file.write("\n")
     file.write("\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write("// Variables\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write("\n")
     file.write("/**\n")
-    file.write(" *   Build information string\n")
+    file.write(" *   Project information string\n")
     file.write(" */\n")
-    file.write("static volatile const char __attribute__ (( section( \".build_info\" ))) gs_build_info[BUILD_INFO_STRING_SIZE] = \"\\\n")
+    file.write("static volatile const char __attribute__ (( section( VER_APP_PROJ_INFO_SECTION ))) gs_proj_info[VER_APP_PROJ_INFO_SIZE] = \"\\\n")
 
 
 def write_c_file_footer(file):
@@ -197,12 +180,12 @@ def write_c_file_footer(file):
     file.write("/**\n")
     file.write(" * 	@brief		Get build info string\n")
     file.write(" *\n")
-    file.write(" * @return 		gs_build_info - Build information string\n")
+    file.write(" * @return 		gs_proj_info - Project information string\n")
     file.write(" */\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
-    file.write("const char* build_info_get_str(void)\n")
+    file.write("const char* version_proj_info_get_str(void)\n")
     file.write("{\n")
-    file.write("    return (const char*) &gs_build_info;\n")
+    file.write("    return (const char*) &gs_proj_info;\n")
     file.write("}\n")
     file.write("\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
@@ -223,19 +206,19 @@ def create_h_file(file):
     file.write("// This software is under MIT licence (https://opensource.org/licenses/MIT)\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write("/*!\n")
-    file.write("*@file      build_info.h\n")
-    file.write("*@brief     Build informations\n")
+    file.write("*@file      proj_info.h\n")
+    file.write("*@brief     Detailed project informations\n")
     file.write("*@author    Ziga Miklosic\n")
     file.write("*@date      xx.xx.xxxx\n")
     file.write("*/\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write("/*!\n")
-    file.write(" * @addtogroup BUILD_INFO\n")
+    file.write(" * @addtogroup PROJ_INFO\n")
     file.write(" * @{ <!-- BEGIN GROUP -->\n")
     file.write(" */\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
-    file.write("#ifndef __BUILD_INFO_H_\n")
-    file.write("#define __BUILD_INFO_H_ \n")
+    file.write("#ifndef __PROJ_INFO_H_\n")
+    file.write("#define __PROJ_INFO_H_ \n")
     file.write("\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write("// Includes\n")
@@ -262,19 +245,23 @@ def write_build_info(file, build_info):
     # Create/Open Source file
     build_info_c = open(file, "w")
 
+    # TODO: Remove if not needed!
     # Create/Open Header file
-    h_file = file[:-1] + "h"
-    build_info_h = open(h_file, "w")
+    #h_file = file[:-1] + "h"
+    #build_info_h = open(h_file, "w")
 
     # Create source file
     create_c_file(build_info_c, build_info)
 
+    # TODO: Remove if not needed!
     # Create header file
-    create_h_file(build_info_h)
+    #create_h_file(build_info_h)
 
     # Close file
     build_info_c.close()
-    build_info_h.close()
+
+    # TODO: Remove if not needed!
+    #build_info_h.close()
 
 
 
@@ -289,26 +276,19 @@ def write_build_info(file, build_info):
 def main():
     
     # Get invocation arguments
-    ver_flag, file, sw_proj_name, build_cfg, pc_name, host_os = arg_parser()
+    file, sw_proj_name, build_cfg, pc_name, host_os = arg_parser()
+ 
+    # Create
+    build_info_str = create_build_info(sw_proj_name, build_cfg, pc_name, host_os)
 
-    # Version infor
-    if ver_flag:
-        print_script_version()
+    # Write to file
+    write_build_info(file, build_info_str)
 
-    # Hex file info
-    else:
-        
-        # Create
-        build_info_str = create_build_info(sw_proj_name, build_cfg, pc_name, host_os)
-
-        # Write to file
-        write_build_info(file, build_info_str)
-
-        print("")
-        print("====================================================================")
-        print("     HEX BUILD INFO TOOL %s" % SCRIPT_VER )
-        print("====================================================================")
-        print("Build information successfully generated!")
+    print("")
+    print("====================================================================")
+    print("     HEX BUILD INFO TOOL %s" % SCRIPT_VER )
+    print("====================================================================")
+    print("Build information successfully generated!")
 
     
 # ===============================================================================
