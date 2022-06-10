@@ -34,7 +34,7 @@ HEX_FILE_LITTLE_ENDIAN = True
 BUILD_INFO_STRING_SIZE = 2048
 
 # End string termination
-STRING_TERMINATION = "\x00"     # TODO: Check how this looks in outputed HEX file!!!!
+STRING_TERMINATION = ""   
 
 # New line
 NEWLINE = str("\\r\\n\\\n")
@@ -164,7 +164,7 @@ def write_c_file_header(file):
     file.write("#include <stdint.h>\n")
     file.write("#include <stdlib.h>\n")
     file.write("\n")
-    file.write("#include <build_info.h>\n")
+    file.write("#include \"build_info.h\"\n")
     file.write("\n")
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write("// Definitions\n")
@@ -183,7 +183,7 @@ def write_c_file_header(file):
     file.write("/**\n")
     file.write(" *   Build information string\n")
     file.write(" */\n")
-    file.write("static volatile const char __attribute__ (( section( "".build_info"" ))) gs_build_info[BUILD_INFO_STRING_SIZE] = \"\\\n")
+    file.write("static volatile const char __attribute__ (( section( \".build_info\" ))) gs_build_info[BUILD_INFO_STRING_SIZE] = \"\\\n")
 
 
 def write_c_file_footer(file):
@@ -218,7 +218,43 @@ def create_c_file(file, build_info):
     write_c_file_footer(file)
 
 def create_h_file(file):
-    pass
+    file.write("// Copyright (c) 2022 Ziga Miklosic\n")
+    file.write("// All Rights Reserved\n")
+    file.write("// This software is under MIT licence (https://opensource.org/licenses/MIT)\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("/*!\n")
+    file.write("*@file      build_info.h\n")
+    file.write("*@brief     Build informations\n")
+    file.write("*@author    Ziga Miklosic\n")
+    file.write("*@date      xx.xx.xxxx\n")
+    file.write("*/\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("/*!\n")
+    file.write(" * @addtogroup BUILD_INFO\n")
+    file.write(" * @{ <!-- BEGIN GROUP -->\n")
+    file.write(" */\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("#ifndef __BUILD_INFO_H_\n")
+    file.write("#define __BUILD_INFO_H_ \n")
+    file.write("\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("// Includes\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("#include <stdint.h>\n")
+    file.write(" \n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("// Functions\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("const char* build_info_get_str(void);\n")
+    file.write("\n")
+    file.write("#endif // __BUILD_INFO_H_\n")
+    file.write("\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("/*!\n")
+    file.write(" * @} <!-- END GROUP -->\n")
+    file.write(" */\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write(" \n")
 
 
 def write_build_info(file, build_info):
