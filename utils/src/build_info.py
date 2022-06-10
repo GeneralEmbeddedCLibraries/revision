@@ -69,7 +69,7 @@ def arg_parser():
 
     # Add arguments
     parser.add_argument("-v",   help="get version",                     action="store_true" ,                   required=False )
-    parser.add_argument("-f",   help="build info file",                 metavar="build_info_file",         type=str,   required=False )
+    parser.add_argument("-f",   help="build info file",                 metavar="build_info_file",  type=str,   required=False )
     parser.add_argument("-n",   help="software project name",           metavar="name",             type=str,   required=False )
     parser.add_argument("-c",   help="used build configuration",        metavar="build_cfg",        type=str,   required=False )
     parser.add_argument("-pc",  help="computer name",                   metavar="pc_name",          type=str,   required=False )
@@ -187,10 +187,30 @@ def write_c_file_header(file):
 
 
 def write_c_file_footer(file):
-    file.write("\";")
-    file.write(" ")
-    file.write(" ")
-    file.write(" ")
+    file.write("\";\n")
+    file.write("\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("// Functions\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("/**\n")
+    file.write(" * 	@brief		Get build info string\n")
+    file.write(" *\n")
+    file.write(" * @return 		gs_build_info - Build information string\n")
+    file.write(" */\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("const char* build_info_get_str(void)\n")
+    file.write("{\n")
+    file.write("    return (const char*) &gs_build_info;\n")
+    file.write("}\n")
+    file.write("\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("/*!\n")
+    file.write(" * @} <!-- END GROUP -->\n")
+    file.write(" */\n")
+    file.write("////////////////////////////////////////////////////////////////////////////////\n")
+    file.write("\n")
 
 def create_c_file(file, build_info):
     write_c_file_header(file)
