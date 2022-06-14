@@ -58,23 +58,23 @@
 
 
 /******************************************************************************
- * 	PROJ INFORMATIONS SETTINGS
+ * 	PROJECT INFORMATIONS SETTINGS
  *****************************************************************************/
 
 /**
- * 	Enable/Disable build informations
+ * 	Enable/Disable project informations
  */
 #define VER_CFG_USE_PROJ_INFO_EN		( 1 )
 
 /**
- * 	Build info max. size
+ * 	Project info max. size
  *
  * 	Unit: bytes
  */
 #define VER_APP_PROJ_INFO_SIZE			( 2048 )
 
 /**
- * 	Build info section
+ * 	Project info section
  */
 #define VER_APP_PROJ_INFO_SECTION 		( ".proj_info" )
 

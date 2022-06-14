@@ -1,8 +1,8 @@
 # **Revision**
-Revision module provides device information in form of SW & HW version and application header. 
+Revision module provides device information in form of SW & HW version, application header and additional project informations. 
 
 ## **Dependencies**
-This module needs only ANSI C standard libraries. 
+This module needs only ANSI C standard libraries. All programs needed for addtional project information generation are provided within same repository. There is no need for any separate installation of tools.
 
 ## **API**
 | API Functions | Description | Prototype |
@@ -11,6 +11,7 @@ This module needs only ANSI C standard libraries.
 | **version_get_hw** | Get HW version | uint32_t version_get_hw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |
 | **version_get_sw_str** | Get SW versioning string | const char* version_get_sw_str(void) |
 | **version_get_hw_str** | Get HW versioning string | const char* version_get_hw_str(void) |
+| **version_get_proj_info_str** | Get project information string | const char* version_get_proj_info_str(void) |
 
 ## **Define SW&HW version**
 Software and hardware version can be changed in configuration file ***ver_cfg.h***:
@@ -140,24 +141,206 @@ SECTIONS
 ```
 
 ## **Project Informations**
+Project informations contins details about IDE configurations, PC host and current git worktree status. Such a informations can be very usefull later on as it can be obtained from device in run-time or even by inspecting release output file such as HEX. Therefore this approach can shorten time to find a bug and provice a higher level of code traceability.
 
-### **Guide for STM32Cube IDE**
+As an output to project information process two C code files are created: ***proj_info.c*** and
+***proj_info.h***. Inside source file there is string definition created by pre-build script based containing all sorts of information.
 
+Following steps are needed to fully automate project informations inside your IDE:
+
+### **I) Change config file**
+Enable project information generation by setting **VER_CFG_USE_PROJ_INFO_EN** to 1.
+
+```C
+/**
+ * 	Enable/Disable project informations
+ */
+#define VER_CFG_USE_PROJ_INFO_EN		( 1 )
+```
+
+### **II) Creating memory section**
+Under sections inside linker script add new section for project informations. Note that name of symbol inside section must match value of ***VER_APP_PROJ_INFO_SECTION*** specified inside ***ver_cfg.h***.
+
+1. Add new section inside linker script:
+```
+/* Sections */
+SECTIONS
+{
+
+    /* A lot of stuff before... */
+
+
+    /* Projec information section */
+  .proj_info :
+  {
+	PROJ_INFO_START = .;
+	*(.proj_info)				/*Project info string*/
+	*(.proj_info*)				/*Project info string */
+	KEEP (*(.proj_info*))
+	FILL(0x0000);
+	PROJ_INFO_END = .;
+  } >PROJ_INFO
+
+
+    /* A lot of stuff after... */
+}
+
+```
+
+2. Change configuration inside ***ver_cfg.h*** to match linker settings:
+```C
+/**
+ * 	Project info section
+ */
+#define VER_APP_PROJ_INFO_SECTION 		( ".proj_info" )
+
+```
+
+### **III) Setup pre-build task**
+
+This example is applicable when using STM32CubeIDE, but it should gives you a guidence to other vendors IDEs.
 In order to automate process of generate project information go to: *Properties->C/C++Build->Settings->BuildSteps*
 
-Paste folowing command under Pre-Build steps:
+Paste folowing command under Pre-Build steps and change only root name path:
 ```
 python ../my_src/revision/revision/utils/src/proj_info.py -f ../my_src/revision/revision/src/proj_info.c -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
 ```
 
-Given example will generate ***proj_info.c** file where additional project inforamtion string is being defined. 
+**NOTICE: Output generated file location and name must not be changed!**
 
-NOTICE: Make sure to have ***VER_CFG_USE_PROJ_INFO_EN*** macro set to 1 when using project informations!
+
+---
+### **Example of Automatically Generated Output files**
+
+#### **Source file**
+```C
+// Copyright (c) 2022 Ziga Miklosic
+// All Rights Reserved
+// This software is under MIT licence (https://opensource.org/licenses/MIT)
+////////////////////////////////////////////////////////////////////////////////
+/*!
+*@file      proj_info.c
+*@brief     Project informations
+*@author    Ziga Miklosic
+*@date      13.06.2022
+*@time      18:14:52
+*
+*@note     This is automatically generated file!
+*/
+////////////////////////////////////////////////////////////////////////////////
+/*!
+ * @addtogroup PROJ_INFO
+ * @{ <!-- BEGIN GROUP -->
+ */
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Includes
+////////////////////////////////////////////////////////////////////////////////
+#include <stdint.h>
+#include <stdlib.h>
+
+#include "proj_info.h"
+#include "../../version_cfg.h"
+
+////////////////////////////////////////////////////////////////////////////////
+// Definitions
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Variables
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *   Project information string
+ */
+static volatile const char __attribute__ (( section( VER_APP_PROJ_INFO_SECTION ))) gs_proj_info[VER_APP_PROJ_INFO_SIZE] = "\
+=================================================\r\n\
+	PROJECT INFORMATIONS\r\n\
+  generated by ""proj_info.py""  V0.0.1\r\n\
+=================================================\r\n\
+ Project name: AngleSimulator\r\n\
+ Build config: Debug\r\n\
+      PC name: ZIGAM\r\n\
+      Host OS: Windows 10\r\n\
+       Author: zigam\r\n\
+        Email: ziga.miklosic@gmail.com\r\n\
+.\r\n\
+*** Git  informations ***\r\n\
+       Origin: git@github.com:ZiGaMi/AngleSimulator.git\r\n\
+       Branch: feature/build_info_testing\r\n\
+   Commit SHA: 7cd03fc\r\n\
+=================================================\r\n\
+";
+
+////////////////////////////////////////////////////////////////////////////////
+// Functions
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * 	@brief		Get build info string
+ *
+ * @return 		gs_proj_info - Project information string
+ */
+////////////////////////////////////////////////////////////////////////////////
+const char* proj_info_get_str(void)
+{
+    return (const char*) gs_proj_info;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/*!
+ * @} <!-- END GROUP -->
+ */
+////////////////////////////////////////////////////////////////////////////////
+```
+
+#### **Header file**
+```C
+// Copyright (c) 2022 Ziga Miklosic
+// All Rights Reserved
+// This software is under MIT licence (https://opensource.org/licenses/MIT)
+////////////////////////////////////////////////////////////////////////////////
+/*!
+*@file      proj_info.h
+*@brief     Project informations
+*@author    Ziga Miklosic
+*@date      13.06.2022
+*@time      18:14:52
+*
+*@note     This is automatically generated file!
+*/
+////////////////////////////////////////////////////////////////////////////////
+/*!
+ * @addtogroup PROJ_INFO
+ * @{ <!-- BEGIN GROUP -->
+ */
+////////////////////////////////////////////////////////////////////////////////
+#ifndef __PROJ_INFO_H_
+#define __PROJ_INFO_H_ 
+
+////////////////////////////////////////////////////////////////////////////////
+// Includes
+////////////////////////////////////////////////////////////////////////////////
+#include <stdint.h>
+ 
+////////////////////////////////////////////////////////////////////////////////
+// Functions
+////////////////////////////////////////////////////////////////////////////////
+const char* proj_info_get_str(void);
+
+#endif // __PROJ_INFO_H_
+
+////////////////////////////////////////////////////////////////////////////////
+/*!
+ * @} <!-- END GROUP -->
+ */
+////////////////////////////////////////////////////////////////////////////////
+```
 
 ## Todo List
- - [ ] Automation script/cmd for calculation of app size and crc
- - [ ] Automation script for acquire build info and writes it into HEX output file
- - [ ] API function to get build info
- - [ ] Usage of build info by user choise via configuration file
+ - [x] API function to get build info
+ - [x] Usage of build info by user choise via configuration file
 
 
