@@ -7,7 +7,7 @@
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
 *@date      25.05.2022
-*@version	V1.1.0
+*@version	V1.2.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /*!
