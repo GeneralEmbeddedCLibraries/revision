@@ -21,10 +21,7 @@ import datetime
 # ===============================================================================
 #       SCRIPT VERSIONING
 # ===============================================================================
-SCRIPT_VER = "V0.0.1"
-
-# HEX file endiannes
-HEX_FILE_LITTLE_ENDIAN = True
+SCRIPT_VER = "V0.1.0"
 
 # ===============================================================================
 #       PROJ INFO SETTINGS
@@ -50,7 +47,7 @@ GIT_ORIGIN_CMD          = "git config --get remote.origin.url"
 
 # Tool description
 TOOL_DESCRIPTION = \
-"proj_info.py %s" % SCRIPT_VER
+"Project Information Generation Tool %s" % SCRIPT_VER
 
 # ===============================================================================
 #       OUTPUT C/H GENERATED FILE SETTINGS
@@ -135,14 +132,18 @@ def create_build_info(sw_proj_name, build_cfg, pc_name, host_os):
     "================================================="             + NEWLINE +\
     STRING_TERMINATION;
     
-
+    # TODO: 
     #"{:>20}".format("Status: ")         + str(git_worktree)           + NEWLINE +\     # TODO: Fix this
     #STRING_TERMINATION;
 
     return build_info_str
 
-
-
+# ===============================================================================
+# @brief: Write C file header
+#
+# @param[in]:   file    - Output generated file
+# @return:      void
+# ===============================================================================
 def write_c_file_header(file):
     file.write("// Copyright (c) 2022 Ziga Miklosic\n")
     file.write("// All Rights Reserved\n")
@@ -185,11 +186,13 @@ def write_c_file_header(file):
     file.write(" *   Project information string\n")
     file.write(" */\n")
     file.write("static volatile const char __attribute__ (( section( VER_APP_PROJ_INFO_SECTION ))) gs_proj_info[VER_APP_PROJ_INFO_SIZE] = \"\\\n")
-    
-    # TODO: Remove if not needed
-    #file.write("static volatile const char gs_proj_info[VER_APP_PROJ_INFO_SIZE] = \"\\\n")
 
-
+# ===============================================================================
+# @brief: Write C file footer
+#
+# @param[in]:   file    - Output generated file
+# @return:      void
+# ===============================================================================
 def write_c_file_footer(file):
     file.write("\";\n")
     file.write("\n")
@@ -216,11 +219,24 @@ def write_c_file_footer(file):
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write("\n")
 
+# ===============================================================================
+# @brief: Create C file
+#
+# @param[in]:   file        - Output generated file
+# @param[in]:   build_info  - Build information
+# @return:      void
+# ===============================================================================
 def create_c_file(file, build_info):
     write_c_file_header(file)
     file.write(build_info)
     write_c_file_footer(file)
 
+# ===============================================================================
+# @brief: Create H file
+#
+# @param[in]:   file    - Output generated file
+# @return:      void
+# ===============================================================================
 def create_h_file(file):
     file.write("// Copyright (c) 2022 Ziga Miklosic\n")
     file.write("// All Rights Reserved\n")
@@ -263,13 +279,17 @@ def create_h_file(file):
     file.write("////////////////////////////////////////////////////////////////////////////////\n")
     file.write(" \n")
 
-
-def write_build_info(file, build_info):
+# ===============================================================================
+# @brief: Create and write project info to files
+#
+# @param[in]:   file    - Output generated file
+# @return:      void
+# ===============================================================================
+def write_proj_info(file, build_info):
 
     # Create/Open Source file
     build_info_c = open(file, "w")
 
-    # TODO: Remove if not needed!
     # Create/Open Header file
     h_file = file[:-1] + "h"
     build_info_h = open(h_file, "w")
@@ -277,14 +297,11 @@ def write_build_info(file, build_info):
     # Create source file
     create_c_file(build_info_c, build_info)
 
-    # TODO: Remove if not needed!
     # Create header file
     create_h_file(build_info_h)
 
     # Close file
     build_info_c.close()
-
-    # TODO: Remove if not needed!
     build_info_h.close()
 
 
@@ -302,15 +319,14 @@ def main():
     build_info_str = create_build_info(sw_proj_name, build_cfg, pc_name, host_os)
 
     # Write to file
-    write_build_info(file, build_info_str)
+    write_proj_info(file, build_info_str)
 
     print("")
     print("====================================================================")
     print("     PROJECT INFO GENERATOR %s" % SCRIPT_VER )
     print("====================================================================")
-    print("Project information successfully generated!")
+    print("Project information successfully generated!\n")
 
-    
 # ===============================================================================
 #       CLASSES
 # ===============================================================================

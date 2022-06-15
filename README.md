@@ -204,7 +204,7 @@ In order to automate process of generate project information go to: *Properties-
 
 Paste folowing command under Pre-Build steps and change only root name path:
 ```
-python ../my_src/revision/revision/utils/src/proj_info.py -f ../my_src/revision/revision/src/proj_info.c -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
+../my_src/revision/revision/utils/delivery/proj_info.exe -f ../my_src/revision/revision/src/proj_info.c -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
 ```
 
 **NOTICE: Output generated file location and name must not be changed!**
