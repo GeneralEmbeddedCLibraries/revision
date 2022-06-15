@@ -12,12 +12,12 @@ Tool for analyzing HEX file in order to acquire hidden informations inside build
 
 File: ***hex_crc_calc.exe***
 
-Tool for calculation of application CRC and size.
+Tool for calculation of application CRC and size. TODO:...
 
 
 
-## **HEX Build Info**
+## **Project Information Generation Tool**
 
-File: ***hex_build_info.exe***
+File: ***proj_info.exe***
 
-Tool for creating detailed application informations to be stored directly to HEX file.
+Tool for creating detailed application informations. Shall be called inside pre-build process inside Software Development Environment. How to setup IDE to be able to automate project informations generation look at README.md of the root repository.
