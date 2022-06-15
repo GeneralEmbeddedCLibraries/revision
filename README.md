@@ -162,7 +162,7 @@ Enable project information generation by setting **VER_CFG_USE_PROJ_INFO_EN** to
 ### **2. Creating memory section**
 Under sections inside linker script add new section for project informations. Note that name of symbol inside section must match value of ***VER_APP_PROJ_INFO_SECTION*** specified inside ***ver_cfg.h***.
 
-I) Add new section inside linker script:
+2.1 Add new section inside linker script:
 ```
 /* Sections */
 SECTIONS
@@ -188,7 +188,7 @@ SECTIONS
 
 ```
 
-II) Change configuration inside ***ver_cfg.h*** to match linker settings:
+2.2 Change configuration inside ***ver_cfg.h*** to match linker settings:
 ```C
 /**
  * 	Project info section
