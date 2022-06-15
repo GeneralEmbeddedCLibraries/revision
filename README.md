@@ -339,9 +339,3 @@ const char* proj_info_get_str(void);
  */
 ////////////////////////////////////////////////////////////////////////////////
 ```
-
-## Todo List
- - [x] API function to get build info
- - [x] Usage of build info by user choise via configuration file
-
-
