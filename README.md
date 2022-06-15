@@ -1,8 +1,8 @@
 # **Revision**
-Revision module provides device information in form of SW & HW version and application header. 
+Revision module provides device information in form of SW & HW version, application header and additional project informations. 
 
 ## **Dependencies**
-This module needs only ANSI C standard libraries. 
+This module needs only ANSI C standard libraries. All programs needed for addtional project information generation are provided within same repository. There is no need for any separate installation of tools.
 
 ## **API**
 | API Functions | Description | Prototype |
@@ -11,8 +11,9 @@ This module needs only ANSI C standard libraries.
 | **version_get_hw** | Get HW version | uint32_t version_get_hw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |
 | **version_get_sw_str** | Get SW versioning string | const char* version_get_sw_str(void) |
 | **version_get_hw_str** | Get HW versioning string | const char* version_get_hw_str(void) |
+| **version_get_proj_info_str** | Get project information string | const char* version_get_proj_info_str(void) |
 
-## **Define SW&HW version**
+## **Define Software & Hardware version**
 Software and hardware version can be changed in configuration file ***ver_cfg.h***:
 
 ```C
@@ -33,13 +34,14 @@ Software and hardware version can be changed in configuration file ***ver_cfg.h*
 #define VER_HW_TEST       0
 ```
 
+In embedded world there is very tight connection between HW and SW. Knowing what kind of software is compatible with any specific hardware version is critical. Therefore part of revision module is also HW version. Based on that informations one can derive compatibility of software and hardware. 
+
 ### **Version notation guideline**
 It is prefered to used "Semantic Versioning" (more about that [here](https://semver.org/spec/v2.0.0.html)). Brief description of version notation:
  - MAJOR: Change when code is not back-compatable due to API change
  - MINOR: Change after adding new features and code must be still back-compatable
  - DEVELOP: Change after fixing minor bugs and code must be still back-compatable
- - TEST: Change after providing a special (usally for internal use only) SW in order to validate system design
-
+ - TEST: Change after providing a special (usally for internal use only) SW in order to validate system design. Of course code must be still back-compatable
 
 ## **Application header**
 Application header contains information about SW version, application size and output image (.hex file) CRC value. Therefore it can be used for data integrity validation. Checksum and application size makes end build application more suitable for bootloader support. Additionally SW version of running application can be acquired easily by looking into outputed .hex file at specific location all thanks to application header.
@@ -85,11 +87,11 @@ APP_HEADER_ADDR	= 0x08020000;
 APP_HEADER_SIZE	= 16;	/*bytes*/
 
 /* Build informations address & size */
-BUILD_INFO_ADDR	= ( 0x08020000 + APP_HEADER_SIZE );
-BUILD_INFO_SIZE	= 2048;	/*bytes*/
+PROJ_INFO_ADDR	= ( 0x08020000 + APP_HEADER_SIZE );
+PROJ_INFO_SIZE	= 2048;	/*bytes*/
 
 /* Total size of all user define regions */
-USER_REGION_SIZE = ( APP_HEADER_SIZE + BUILD_INFO_SIZE );
+USER_REGION_SIZE = ( APP_HEADER_SIZE + PROJ_INFO_SIZE );
 
 
 /* Memories definition */
@@ -97,8 +99,8 @@ MEMORY
 {
   RAM    (xrw)    : ORIGIN = 0x20000000,   		LENGTH = 64K
   FLASH   (rx)    : ORIGIN = 0x08000000,   		LENGTH = 512K-USER_REGION_SIZE
-  APP_HEADER (r)  : ORIGIN = APP_HEADER_ADDR,   LENGTH = APP_HEADER_SIZE			
-  BUILD_INFO (r)  : ORIGIN = BUILD_INFO_ADDR,   LENGTH = BUILD_INFO_SIZE		
+  APP_HEADER (r)  : ORIGIN = APP_HEADER_ADDR, LENGTH = APP_HEADER_SIZE			
+  PROJ_INFO (r)   : ORIGIN = PROJ_INFO_ADDR,  LENGTH = PROJ_INFO_SIZE		
 }
 ```
 NOTE: Don't forget to reduce size of FLASH memory in order to fit in user defined memory regions!
@@ -139,23 +141,201 @@ SECTIONS
 #define VER_APP_HEAD_SECTION			( ".app_header" )
 ```
 
-## **Build Informations**
+## **Project Informations**
+Project informations contains details about IDE configurations, PC host and current git worktree status. Such an informations can be very usefull later on, as it can be obtained from device in run-time or even by inspecting release output files such as Intel HEX. Therefore this approach can shorten time to find a bug and provide a higher level of code traceability.
 
-### **Guide for STM32Cube IDE**
+As an output to project information process two C code files are created: ***proj_info.c*** and
+***proj_info.h***. Detailed informations are created in string format and can be found in generated source file. 
 
-In order to automate process of inserting build information into outputed HEX file go to: *Properties->C/C++Build->Settings->BuildSteps*
+Next section describe steps how to achieve automation of project information creation. In case project information string can be placed anywhere in the memory, step number 2 can be left out.
 
-Paste folowing command under Post-Build steps:
+### **1. Change config file**
+Enable project information generation by setting **VER_CFG_USE_PROJ_INFO_EN** to 1.
+
+```C
+/**
+ * 	Enable/Disable project informations
+ */
+#define VER_CFG_USE_PROJ_INFO_EN		( 1 )
 ```
-python ..\my_src\revision\revision\utils\src\hex_build_info.py -f${ConfigName}\${ProjName}.hex -ba 0x08020020 -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
+
+### **2. Creating memory section**
+Under sections inside linker script add new section for project informations. Note that name of symbol inside section must match value of ***VER_APP_PROJ_INFO_SECTION*** specified inside ***ver_cfg.h***.
+
+2.1 Add new section inside linker script:
+```
+/* Sections */
+SECTIONS
+{
+
+    /* A lot of stuff before... */
+
+
+    /* Projec information section */
+  .proj_info :
+  {
+	PROJ_INFO_START = .;
+	*(.proj_info)				/*Project info string*/
+	*(.proj_info*)				/*Project info string */
+	KEEP (*(.proj_info*))
+	FILL(0x0000);
+	PROJ_INFO_END = .;
+  } >PROJ_INFO
+
+
+    /* A lot of stuff after... */
+}
+
 ```
 
-This command will run ***hex_build_info.py*** and will put build informations to 0x08020020 locations inside specified outputed HEX file.
+2.2 Change configuration inside ***ver_cfg.h*** to match linker settings:
+```C
+/**
+ * 	Project info section
+ */
+#define VER_APP_PROJ_INFO_SECTION 		( ".proj_info" )
 
-## Todo List
- - [ ] Automation script/cmd for calculation of app size and crc
- - [ ] Automation script for acquire build info and writes it into HEX output file
- - [ ] API function to get build info
- - [ ] Usage of build info by user choise via configuration file
+```
+
+### **3. Setup pre-build task**
+
+This example is applicable when using STM32CubeIDE, but it should gives you a guidence to other vendors IDEs.
+In order to automate process of generate project information go to: *Properties->C/C++Build->Settings->BuildSteps*
+
+Paste folowing command under Pre-Build steps and change only root name path:
+```
+../my_src/revision/revision/utils/delivery/proj_info.exe -f ../my_src/revision/revision/src/proj_info.c -n ${ProjName} -c ${ConfigName}  -pc ${COMPUTERNAME} -os '${HostOsName}'
+```
+
+**NOTICE: Output generated file location and name must not be changed!**
 
 
+---
+### **Example of Automatically Generated Output files**
+
+#### **Source file**
+```C
+// Copyright (c) 2022 Ziga Miklosic
+// All Rights Reserved
+// This software is under MIT licence (https://opensource.org/licenses/MIT)
+////////////////////////////////////////////////////////////////////////////////
+/*!
+*@file      proj_info.c
+*@brief     Project informations
+*@author    Ziga Miklosic
+*@date      13.06.2022
+*@time      18:14:52
+*
+*@note     This is automatically generated file!
+*/
+////////////////////////////////////////////////////////////////////////////////
+/*!
+ * @addtogroup PROJ_INFO
+ * @{ <!-- BEGIN GROUP -->
+ */
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Includes
+////////////////////////////////////////////////////////////////////////////////
+#include <stdint.h>
+#include <stdlib.h>
+
+#include "proj_info.h"
+#include "../../version_cfg.h"
+
+////////////////////////////////////////////////////////////////////////////////
+// Definitions
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Variables
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *   Project information string
+ */
+static volatile const char __attribute__ (( section( VER_APP_PROJ_INFO_SECTION ))) gs_proj_info[VER_APP_PROJ_INFO_SIZE] = "\
+=================================================\r\n\
+	PROJECT INFORMATIONS\r\n\
+  generated by ""proj_info.py""  V0.0.1\r\n\
+=================================================\r\n\
+ Project name: Wardrobe_Lighting_SW\r\n\
+ Build config: Debug\r\n\
+      PC name: ZIGAMIKLOSIC\r\n\
+      Host OS: Windows 10\r\n\
+       Author: zigam\r\n\
+        Email: ziga.miklosic@gmail.com\r\n\
+.\r\n\
+*** Git  informations ***\r\n\
+       Origin: git@github.com:ZiGaMi/Wardrobe_Lighting_SW.git\r\n\
+       Branch: feature/build_info_testing\r\n\
+   Commit SHA: 7cd03fc\r\n\
+=================================================\r\n\
+";
+
+////////////////////////////////////////////////////////////////////////////////
+// Functions
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * 	@brief		Get build info string
+ *
+ * @return 		gs_proj_info - Project information string
+ */
+////////////////////////////////////////////////////////////////////////////////
+const char* proj_info_get_str(void)
+{
+    return (const char*) gs_proj_info;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/*!
+ * @} <!-- END GROUP -->
+ */
+////////////////////////////////////////////////////////////////////////////////
+```
+
+#### **Header file**
+```C
+// Copyright (c) 2022 Ziga Miklosic
+// All Rights Reserved
+// This software is under MIT licence (https://opensource.org/licenses/MIT)
+////////////////////////////////////////////////////////////////////////////////
+/*!
+*@file      proj_info.h
+*@brief     Project informations
+*@author    Ziga Miklosic
+*@date      13.06.2022
+*@time      18:14:52
+*
+*@note     This is automatically generated file!
+*/
+////////////////////////////////////////////////////////////////////////////////
+/*!
+ * @addtogroup PROJ_INFO
+ * @{ <!-- BEGIN GROUP -->
+ */
+////////////////////////////////////////////////////////////////////////////////
+#ifndef __PROJ_INFO_H_
+#define __PROJ_INFO_H_ 
+
+////////////////////////////////////////////////////////////////////////////////
+// Includes
+////////////////////////////////////////////////////////////////////////////////
+#include <stdint.h>
+ 
+////////////////////////////////////////////////////////////////////////////////
+// Functions
+////////////////////////////////////////////////////////////////////////////////
+const char* proj_info_get_str(void);
+
+#endif // __PROJ_INFO_H_
+
+////////////////////////////////////////////////////////////////////////////////
+/*!
+ * @} <!-- END GROUP -->
+ */
+////////////////////////////////////////////////////////////////////////////////
+```

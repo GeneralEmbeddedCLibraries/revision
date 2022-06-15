@@ -25,6 +25,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include <stdint.h>
 
+#include "../../version_cfg.h"
+
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -39,10 +41,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Functions
 ////////////////////////////////////////////////////////////////////////////////
-uint32_t 		version_get_sw		(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
-uint32_t 		version_get_hw		(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
-const char*		version_get_sw_str	(void);
-const char*		version_get_hw_str	(void);
+uint32_t 		version_get_sw				(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
+uint32_t 		version_get_hw				(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
+const char*		version_get_sw_str			(void);
+const char*		version_get_hw_str			(void);
+const char* 	version_get_proj_info_str	(void);
 
 #endif // __VERSION_H_
 

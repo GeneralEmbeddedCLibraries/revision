@@ -21,9 +21,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include <stdint.h>
 #include <stdlib.h>
-
 #include "version.h"
-#include "../../version_cfg.h"
+
+#if ( 1 == VER_CFG_USE_PROJ_INFO_EN )
+#include "proj_info.h"
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -56,6 +58,10 @@ typedef struct
 	uint32_t	app_size;		/**<Size of application - shall be calculated by post-build script */
 	uint32_t	app_crc;		/**<Application CRC32 - calculated by post-build script */
 } ver_app_header_t;
+
+////////////////////////////////////////////////////////////////////////////////
+// Variables
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * 	Software string and number
@@ -179,6 +185,26 @@ const char*	version_get_sw_str(void)
 const char*	version_get_hw_str(void)
 {
 	return gs_hw_ver_str;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * 	@brief		Get project detailed information string
+ *
+ * @return 		proj_info_str - Project info string
+ */
+////////////////////////////////////////////////////////////////////////////////
+const char* version_get_proj_info_str(void)
+{
+	const char* proj_info_str = NULL;
+
+	#if ( 1 == VER_CFG_USE_PROJ_INFO_EN )
+		proj_info_str = proj_info_get_str();
+	#else
+		proj_info_str = "Not used...";
+	#endif
+
+	return proj_info_str;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
