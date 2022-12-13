@@ -6,8 +6,8 @@
 *@file      version.h
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
-*@date      27.05.2022
-*@version	V1.2.0
+*@date      13.12.2022
+*@version	V1.2.1
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -36,7 +36,7 @@
  */
 #define VER_VER_MAJOR		( 1 )
 #define VER_VER_MINOR		( 2 )
-#define VER_VER_DEVELOP		( 0 )
+#define VER_VER_DEVELOP		( 1 )
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions
