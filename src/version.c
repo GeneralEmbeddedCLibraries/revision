@@ -66,7 +66,7 @@ typedef struct
 /**
  * 	Software string and number
  */
-static const char *		gs_sw_ver_str 			= "Software Version " VER_STR(VER_SW_MAJOR) "." VER_STR(VER_SW_MINOR) "." VER_STR(VER_SW_DEVELOP) "." VER_STR(VER_SW_TEST) "\rBuilted " __DATE__ " " __TIME__;
+static const char *		gs_sw_ver_str 			= "Software Version " VER_STR(VER_SW_MAJOR) "." VER_STR(VER_SW_MINOR) "." VER_STR(VER_SW_DEVELOP) "." VER_STR(VER_SW_TEST) " (Builted on " __DATE__ " " __TIME__ ")";
 static const uint32_t 	gu32_sw_ver_num			= (( VER_SW_MAJOR << 24 ) | ( VER_SW_MINOR << 16 ) | ( VER_SW_DEVELOP << 8 ) | ( VER_SW_TEST ));
 
 /**
@@ -86,7 +86,7 @@ static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SE
 /**
  * 	Hardware string and number
  */
-static const char *		gs_hw_ver_str	 		= "Hardware Version " VER_STR(VER_HW_MAJOR) "." VER_STR(VER_HW_MINOR) "." VER_STR(VER_HW_DEVELOP) "." VER_STR(VER_HW_TEST) "\r";
+static const char *		gs_hw_ver_str	 		= "Hardware Version " VER_STR(VER_HW_MAJOR) "." VER_STR(VER_HW_MINOR) "." VER_STR(VER_HW_DEVELOP) "." VER_STR(VER_HW_TEST);
 static const uint32_t 	gu32_hw_ver_num 		= (( VER_HW_MAJOR << 24 ) | ( VER_HW_MINOR << 16 ) | ( VER_HW_DEVELOP << 8 ) | ( VER_HW_TEST ));
 
 ////////////////////////////////////////////////////////////////////////////////
