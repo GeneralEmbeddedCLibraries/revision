@@ -4,6 +4,13 @@ Revision module provides device information in form of SW & HW version, applicat
 ## **Dependencies**
 This module needs only ANSI C standard libraries. All programs needed for addtional project information generation are provided within same repository. There is no need for any separate installation of tools.
 
+## **General Embedded C Libraries Ecosystem**
+In order to be part of *General Embedded C Libraries Ecosystem* this module must be placed in following path: 
+
+```
+root/revision/revision/"module_space"
+```
+
 ## **API**
 | API Functions | Description | Prototype |
 | --- | ----------- | ----- |
