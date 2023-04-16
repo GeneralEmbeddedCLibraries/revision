@@ -110,19 +110,19 @@ uint32_t version_get_sw(uint8_t * const p_major, uint8_t * const p_minor, uint8_
 
 	if ( NULL != p_major )
 	{
-		*p_major = (( gu32_sw_ver_num >> 24UL ) & 0xFFUL );
+		*p_major = (uint8_t)(( gu32_sw_ver_num >> 24U ) & 0xFFU );
 	}
 	if ( NULL != p_minor )
 	{
-		*p_minor = (( gu32_sw_ver_num >> 16UL ) & 0xFFUL );
+		*p_minor = (uint8_t)(( gu32_sw_ver_num >> 16U ) & 0xFFU );
 	}
 	if ( NULL != p_develop )
 	{
-		*p_develop = (( gu32_sw_ver_num >> 8UL ) & 0xFFUL );
+		*p_develop = (uint8_t)(( gu32_sw_ver_num >> 8U ) & 0xFFU );
 	}
 	if ( NULL != p_test )
 	{
-		*p_test = (( gu32_sw_ver_num >> 0UL ) & 0xFFUL );
+		*p_test = (uint8_t)(( gu32_sw_ver_num >> 0U ) & 0xFFU );
 	}
 
 	return sw_ver;
@@ -145,19 +145,19 @@ uint32_t version_get_hw(uint8_t * const p_major, uint8_t * const p_minor, uint8_
 
 	if ( NULL != p_major )
 	{
-		*p_major = (( gu32_hw_ver_num >> 24UL ) & 0xFFUL );
+		*p_major = (uint8_t)(( gu32_hw_ver_num >> 24U ) & 0xFFU );
 	}
 	if ( NULL != p_minor )
 	{
-		*p_minor = (( gu32_hw_ver_num >> 16UL ) & 0xFFUL );
+		*p_minor = (uint8_t)(( gu32_hw_ver_num >> 16U ) & 0xFFU );
 	}
 	if ( NULL != p_develop )
 	{
-		*p_develop = (( gu32_hw_ver_num >> 8UL ) & 0xFFUL );
+		*p_develop = (uint8_t)(( gu32_hw_ver_num >> 8U ) & 0xFFU );
 	}
 	if ( NULL != p_test )
 	{
-		*p_test = (( gu32_hw_ver_num >> 0UL ) & 0xFFUL );
+		*p_test = (uint8_t)(( gu32_hw_ver_num >> 0U ) & 0xFFU );
 	}
 
 	return hw_ver;
