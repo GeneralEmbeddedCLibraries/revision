@@ -53,10 +53,11 @@ It is prefered to used "Semantic Versioning" (more about that [here](https://sem
 ## **Application header**
 Application header contains information about SW version, application size and output image (.hex file) CRC value. Therefore it can be used for data integrity validation. Checksum and application size makes end build application more suitable for bootloader support. Additionally SW version of running application can be acquired easily by looking into outputed .hex file at specific location all thanks to application header.
 
-Application header structure:
+### Application header structure:
+
 ![](doc/pic/Application_Header_Structure.png)
 
-Definition of application header:
+### Definition of application header:
 ```C
 /**
  *  Application header
