@@ -35,8 +35,30 @@
  * 	Module version
  */
 #define VER_VER_MAJOR		( 1 )
-#define VER_VER_MINOR		( 2 )
-#define VER_VER_DEVELOP		( 1 )
+#define VER_VER_MINOR		( 3 )
+#define VER_VER_DEVELOP		( 0 )
+
+/**
+ *  Application header
+ *
+ * @note    Purpose of application header is to store informations
+ *          of software in HEX output file at specific location. This
+ *          gives you the insights of the application itself by looking
+ *          only into output file such as Intel HEX type or binary.
+ *
+ *
+ *  Size: 256 bytes
+ */
+typedef struct __VER_PACKED__
+{
+    uint32_t    sw_ver;             /**<Software (application) version */
+    uint32_t    hw_ver;             /**<Hadrware version */
+    uint32_t    app_size;           /**<Size of application in bytes - shall be calculated by post-build script */
+    uint32_t    app_crc;            /**<Application CRC32 - calculated by post-build script */
+    uint8_t     reserved[238];      /**<Reserved space in application header */
+    uint8_t     ver;                /**<Application header version */
+    uint8_t     crc;                /**<Application header CRC8 */
+} ver_app_header_t;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions
@@ -46,6 +68,7 @@ uint32_t 		version_get_hw				(uint8_t * const p_major, uint8_t * const p_minor, 
 const char*		version_get_sw_str			(void);
 const char*		version_get_hw_str			(void);
 const char* 	version_get_proj_info_str	(void);
+
 
 #endif // __VERSION_H_
 

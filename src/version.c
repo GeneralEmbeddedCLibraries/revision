@@ -32,32 +32,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
+ *  Application header version
+ */
+#define VER_APP_HEADER_VER          ( 1 )
+
+/**
  * 	Convert value to string
  */
 #define VER_STR_HELPER(x) 		#x
 #define VER_STR(x) 				VER_STR_HELPER(x)
-
-/**
- * 	Application header
- *
- * @note	Purpose of application header is to store informations
- * 			of software in HEX output file at specific location. This
- * 			gives you the insights of the application itself by looking
- * 			only into output file of Intel HEX type.
- *
- *
- * 	Size: 16 bytes
- */
-typedef struct
-{
-	uint32_t 	signature;		/**<Signature - to validate if header is valid */
-	uint8_t 	sw_major;		/**<Major SW version */
-	uint8_t 	sw_minor;		/**<Minor SW version */
-	uint8_t 	sw_dev;			/**<Develop SW version */
-	uint8_t 	sw_test;		/**<Test SW version */
-	uint32_t	app_size;		/**<Size of application - shall be calculated by post-build script */
-	uint32_t	app_crc;		/**<Application CRC32 - calculated by post-build script */
-} ver_app_header_t;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -70,24 +53,25 @@ static const char *		gs_sw_ver_str 			= "Software Version " VER_STR(VER_SW_MAJOR
 static const uint32_t 	gu32_sw_ver_num			= (( VER_SW_MAJOR << 24 ) | ( VER_SW_MINOR << 16 ) | ( VER_SW_DEVELOP << 8 ) | ( VER_SW_TEST ));
 
 /**
+ *  Hardware string and number
+ */
+static const char *     gs_hw_ver_str           = "Hardware Version " VER_STR(VER_HW_MAJOR) "." VER_STR(VER_HW_MINOR) "." VER_STR(VER_HW_DEVELOP) "." VER_STR(VER_HW_TEST);
+static const uint32_t   gu32_hw_ver_num         = (( VER_HW_MAJOR << 24 ) | ( VER_HW_MINOR << 16 ) | ( VER_HW_DEVELOP << 8 ) | ( VER_HW_TEST ));
+
+
+/**
  * 	Application header informations
  */
 static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SECTION ))) g_app_header =
 {
-	.signature 	= VER_APP_HEAD_SIGN,
-	.sw_major	= VER_SW_MAJOR,
-	.sw_minor	= VER_SW_MINOR,
-	.sw_dev		= VER_SW_DEVELOP,
-	.sw_test	= VER_SW_TEST,
-	.app_size	= 0,	/*Calculated by post-build script */
-	.app_crc	= 0,	/*Calculated by post-build script */
+    .sw_ver     = gu32_sw_ver_num,
+	.hw_ver     = gu32_hw_ver_num,
+	.app_size	= 0,	                /* Calculated by post-build script */
+	.app_crc	= 0,	                /* Calculated by post-build script */
+	.ver        = VER_APP_HEADER_VER,
+	.crc        = 0,                    /* Calculated by post-build script */
 };
 
-/**
- * 	Hardware string and number
- */
-static const char *		gs_hw_ver_str	 		= "Hardware Version " VER_STR(VER_HW_MAJOR) "." VER_STR(VER_HW_MINOR) "." VER_STR(VER_HW_DEVELOP) "." VER_STR(VER_HW_TEST);
-static const uint32_t 	gu32_hw_ver_num 		= (( VER_HW_MAJOR << 24 ) | ( VER_HW_MINOR << 16 ) | ( VER_HW_DEVELOP << 8 ) | ( VER_HW_TEST ));
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions
