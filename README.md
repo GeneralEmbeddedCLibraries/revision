@@ -53,30 +53,36 @@ It is prefered to used "Semantic Versioning" (more about that [here](https://sem
 ## **Application header**
 Application header contains information about SW version, application size and output image (.hex file) CRC value. Therefore it can be used for data integrity validation. Checksum and application size makes end build application more suitable for bootloader support. Additionally SW version of running application can be acquired easily by looking into outputed .hex file at specific location all thanks to application header.
 
+Application header structure:
+![](doc/pic/Application_Header_Structure.png)
+
 Definition of application header:
 ```C
 /**
- * 	Application header
+ *  Application header
  *
- * @note	Purpose of application header is to store informations
- * 			of software in HEX output file at specific location. This
- * 			gives you the insights of the application itself by looking
- * 			only into output file of Intel HEX type.
+ * @note    Purpose of application header is to store informations
+ *          of software in HEX output file at specific location. This
+ *          gives you the insights of the application itself by looking
+ *          only into output file such as Intel HEX type or binary.
  *
  *
- * 	Size: 16 bytes
+ *  Size: 256 bytes
  */
-typedef struct
+typedef struct __VER_PACKED__
 {
-	uint32_t 	signature;		/**<Signature - to validate if header is valid */
-	uint8_t 	sw_major;		/**<Major SW version */
-	uint8_t 	sw_minor;		/**<Minor SW version */
-	uint8_t 	sw_dev;			/**<Develop SW version */
-	uint8_t 	sw_test;		/**<Test SW version */
-	uint32_t	app_size;		/**<Size of application - shall be calculated by post-build script */
-	uint32_t	app_crc;		/**<Application CRC32 - calculated by post-build script */
+    uint32_t    sw_ver;             /**<Software (application) version */
+    uint32_t    hw_ver;             /**<Hadrware version */
+    uint32_t    app_size;           /**<Size of application in bytes - shall be calculated by post-build script */
+    uint32_t    app_crc;            /**<Application CRC32 - calculated by post-build script */
+    uint8_t     reserved[238];      /**<Reserved space in application header */
+    uint8_t     ver;                /**<Application header version */
+    uint8_t     crc;                /**<Application header CRC8 */
 } ver_app_header_t;
+
 ```
+
+
 
 ## **Configuration for arm-gcc toolchain**
 ### **Adding memory layout**
@@ -91,7 +97,7 @@ Add new section to memory layout:
 
 /* Application header address & size */
 APP_HEADER_ADDR	= 0x08020000;
-APP_HEADER_SIZE	= 16;	/*bytes*/
+APP_HEADER_SIZE	= 256;	/*bytes*/
 
 /* Build informations address & size */
 PROJ_INFO_ADDR	= ( 0x08020000 + APP_HEADER_SIZE );
