@@ -1,0 +1,142 @@
+<mxfile host="Electron" modified="2023-08-10T12:23:00.400Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.1 Chrome/112.0.5615.87 Electron/24.1.2 Safari/537.36" etag="0UuB3zqnBI7652aSBaz-" version="21.2.1" type="device">
+  <diagram name="Application Header" id="2I_s0Zhyki-mP-fCk9XN">
+    <mxGraphModel dx="1816" dy="665" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F7F7F7;fontFamily=Lucida Console;" vertex="1" parent="1">
+          <mxGeometry x="190" y="130" width="700" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-2" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontStyle=1;fontFamily=Lucida Console;" vertex="1" parent="1">
+          <mxGeometry x="240" y="140" width="210" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-3" value="HEADER" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;horizontal=0;fontStyle=3;fillColor=#B3B3B3;fontSize=14;fontFamily=Lucida Console;" vertex="1" parent="1">
+          <mxGeometry x="220" y="140" width="20" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-4" value="CLI NVM SPACE" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;horizontal=0;fontStyle=3;fillColor=#66FF66;fontSize=14;fontFamily=Lucida Console;" vertex="1" parent="1">
+          <mxGeometry x="200" y="140" width="20" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-5" value="STREAMING PARAMETERS LIST" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;horizontal=0;fontStyle=3;fillColor=#E0E0FF;fontSize=14;fontFamily=Lucida Console;" vertex="1" parent="1">
+          <mxGeometry x="220" y="260" width="20" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-6" value="SIGNATURE (u32)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="140" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-7" value="STREAMING PERIOD (u32)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="160" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-8" value="NUMBER OF PARAMETER (u8)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="180" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-9" value="STREAMING ACTIVE (u8)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="200" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-10" value="CRC (u16)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="220" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-11" value="STREAMING PAR_ID #1 (u16)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#CCCCFF;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="260" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-12" value="STREAMING PAR_ID #2 (u16)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#CCCCFF;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="280" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-13" value="..." style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#E0E0FF;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="300" width="210" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-14" value="0x00" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="140" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-15" value="NVM Address&lt;br&gt;(CLI region)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=3" vertex="1" parent="1">
+          <mxGeometry x="452" y="530" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-16" value="0x04" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="160" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-17" value="0x05" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="180" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-18" value="0x06" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="200" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-19" value="0x07" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="220" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-20" value="Reserved" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#CCCCCC;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="240" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-21" value="0x08" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="240" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-22" value="0x10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="260" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-23" value="0x12" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="280" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-24" value="STREAMING PAR_ID #N (u16)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#CCCCFF;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="470" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-25" value="0x10 + 2*N" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="470" width="108" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-26" value="&lt;i&gt;&lt;b&gt;SIGNATURE&lt;/b&gt;&lt;/i&gt;: Fixed valud of 0xFF00AA55&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;STREAMING PERIOD&lt;/i&gt;&lt;/b&gt;: 32-bit unsigned value of streaming period in miliseconds resolution.&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;NUMBER OF PARAMTER&lt;/i&gt;&lt;/b&gt;: 8-bit unsigned value of counts of paramters inside streaming parameters list.&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;STREAMING ACTIVE&lt;/i&gt;&lt;/b&gt;: 8-bit unsigned value of streaming active flag. If it is set then streaming will be started after device POR.&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;CRC&lt;/i&gt;&lt;/b&gt;: 16-bit unsigned value of CRC checksum over streaming period, number of periods, streaming active and complete streaming parameters list field.&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;STREAMING PAR_ID&lt;/i&gt;&lt;/b&gt;: 16-bit unsigned value of parameter enumeration defined in Device Parameter module (&lt;i&gt;par_cfg.h&lt;/i&gt;)" style="text;html=1;strokeColor=default;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;strokeWidth=1;fontFamily=Lucida Console;" vertex="1" parent="1">
+          <mxGeometry x="570" y="140" width="310" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-27" value="APPLICATION HEADER&lt;br&gt;(256 bytes)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;horizontal=0;fontStyle=3;fillColor=#66FF66;fontSize=14;fontFamily=Lucida Console;" vertex="1" parent="1">
+          <mxGeometry x="200" y="720" width="40" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-28" value="HEADER VERSION (u8)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" vertex="1" parent="1">
+          <mxGeometry x="240" y="880" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-29" value="SW (APP) VERSION (u32)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" vertex="1" parent="1">
+          <mxGeometry x="240" y="720" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-30" value="HW VERSION (u32)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" vertex="1" parent="1">
+          <mxGeometry x="240" y="740" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-31" value="SW VER - DEVELOP (u8)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="-70" y="780" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-32" value="APP SIZE (u32)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" vertex="1" parent="1">
+          <mxGeometry x="240" y="760" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-33" value="0x00" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="720" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-34" value="0x04" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="740" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-35" value="0x08" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="760" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-36" value="0x0C" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="780" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-40" value="STREAMING ACTIVE (u8)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="-70" y="880" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-41" value="CRC (u8)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" vertex="1" parent="1">
+          <mxGeometry x="240" y="900" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-42" value="0xFF" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="450" y="900" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-44" value="Reserved" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#CCCCCC;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="800" width="210" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-46" value="APP CRC (u32)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" vertex="1" parent="1">
+          <mxGeometry x="240" y="780" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-47" value="0xFE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="880" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-48" value="0x10" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="800" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="9ab8QRaC9Be17Akn9t2G-49" value="0xFD" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="452" y="860" width="60" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
