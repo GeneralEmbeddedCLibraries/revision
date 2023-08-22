@@ -52,7 +52,7 @@
 typedef struct __VER_PACKED__
 {
     uint32_t    sw_ver;             /**<Software (application) version */
-    uint32_t    hw_ver;             /**<Hadrware version */
+    uint32_t    hw_ver;             /**<Hardware version */
     uint32_t    app_size;           /**<Size of application in bytes - shall be calculated by post-build script */
     uint32_t    app_crc;            /**<Application CRC32 - calculated by post-build script */
     uint8_t     reserved[238];      /**<Reserved space in application header */
