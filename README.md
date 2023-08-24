@@ -83,8 +83,6 @@ typedef struct __VER_PACKED__
 
 ```
 
-
-
 ## **Configuration for arm-gcc toolchain**
 ### **Adding memory layout**
 
