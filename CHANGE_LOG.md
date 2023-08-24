@@ -11,6 +11,8 @@ and this project/module adheres to [Semantic Versioning](https://semver.org/spec
  - Structure of application header:
     - Removed signature
     - Added header version
+ - Exposing application header definition
+    - For bootloader use in order to ease parsing
 
 ### Fixed
  - Compiler warnings
