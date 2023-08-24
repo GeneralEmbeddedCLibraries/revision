@@ -69,7 +69,6 @@ const char*		version_get_sw_str			(void);
 const char*		version_get_hw_str			(void);
 const char* 	version_get_proj_info_str	(void);
 
-
 #endif // __VERSION_H_
 
 ////////////////////////////////////////////////////////////////////////////////
