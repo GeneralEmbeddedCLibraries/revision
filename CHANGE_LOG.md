@@ -5,6 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project/module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## V1.3.0 - 24.08.2023
+
+### Changes
+ - Structure of application header:
+    - Removed signature
+    - Added header version
+
+### Fixed
+ - Compiler warnings
+
+### Todo
+ - Release for hex_analyzer tool
+ - Instructions how to use hex_analyzer tool
+
+---
 ## V1.2.1 - 13.12.2022
 
 ### Fixed
