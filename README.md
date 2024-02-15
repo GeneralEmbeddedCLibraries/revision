@@ -14,11 +14,11 @@ root/revision/revision/"module_space"
 ## **API**
 | API Functions | Description | Prototype |
 | --- | ----------- | ----- |
-| **version_get_sw** | Get SW version | uint32_t version_get_sw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |****
-| **version_get_hw** | Get HW version | uint32_t version_get_hw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |
-| **version_get_sw_str** | Get SW versioning string | const char* version_get_sw_str(void) |
-| **version_get_hw_str** | Get HW versioning string | const char* version_get_hw_str(void) |
-| **version_get_proj_info_str** | Get project information string | const char* version_get_proj_info_str(void) |
+| **version_get_sw**            | Get SW version                  | uint32_t version_get_sw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |****
+| **version_get_hw**            | Get HW version                  | uint32_t version_get_hw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |
+| **version_get_sw_str**        | Get SW versioning string        | const char* version_get_sw_str(void) |
+| **version_get_hw_str**        | Get HW versioning string        | const char* version_get_hw_str(void) |
+| **version_get_proj_info_str** | Get project information string  | const char* version_get_proj_info_str(void) |
 
 ## **Define Software & Hardware version**
 Software and hardware version can be changed in configuration file ***ver_cfg.h***:
@@ -53,9 +53,13 @@ It is prefered to used "Semantic Versioning" (more about that [here](https://sem
 ## **Application header**
 Application header contains information about SW version, application size and output image (.hex file) CRC value. Therefore it can be used for data integrity validation. Checksum and application size makes end build application more suitable for bootloader support. Additionally SW version of running application can be acquired easily by looking into outputed .hex file at specific location all thanks to application header.
 
-### Application header structure:
+Revision module support two size of application header:
+ 1. To use application header V1 (256 bytes in size) use Revision V1.3.0
+ 2. To use application header V2 (512 bytes in size) use Revision V1.4.0
 
-![](doc/pic/Application_Header_Structure.png)
+### Application header V2 structure:
+
+![](doc/pic/Application_Header_Structure__V2.png)
 
 ### Definition of application header:
 ```C
@@ -68,19 +72,18 @@ Application header contains information about SW version, application size and o
  *          only into output file such as Intel HEX type or binary.
  *
  *
- *  Size: 256 bytes
+ *  Size: 512 bytes
  */
 typedef struct __VER_PACKED__
 {
     uint32_t    sw_ver;             /**<Software (application) version */
-    uint32_t    hw_ver;             /**<Hadrware version */
+    uint32_t    hw_ver;             /**<Hardware version */
     uint32_t    app_size;           /**<Size of application in bytes - shall be calculated by post-build script */
     uint32_t    app_crc;            /**<Application CRC32 - calculated by post-build script */
-    uint8_t     reserved[238];      /**<Reserved space in application header */
+    uint8_t     reserved[494];      /**<Reserved space in application header */
     uint8_t     ver;                /**<Application header version */
     uint8_t     crc;                /**<Application header CRC8 */
 } ver_app_header_t;
-
 ```
 
 ## **Configuration for arm-gcc toolchain**
