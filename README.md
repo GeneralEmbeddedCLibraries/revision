@@ -68,19 +68,18 @@ Application header contains information about SW version, application size and o
  *          only into output file such as Intel HEX type or binary.
  *
  *
- *  Size: 256 bytes
+ *  Size: 512 bytes
  */
 typedef struct __VER_PACKED__
 {
     uint32_t    sw_ver;             /**<Software (application) version */
-    uint32_t    hw_ver;             /**<Hadrware version */
+    uint32_t    hw_ver;             /**<Hardware version */
     uint32_t    app_size;           /**<Size of application in bytes - shall be calculated by post-build script */
     uint32_t    app_crc;            /**<Application CRC32 - calculated by post-build script */
-    uint8_t     reserved[238];      /**<Reserved space in application header */
+    uint8_t     reserved[494];      /**<Reserved space in application header */
     uint8_t     ver;                /**<Application header version */
     uint8_t     crc;                /**<Application header CRC8 */
 } ver_app_header_t;
-
 ```
 
 ## **Configuration for arm-gcc toolchain**

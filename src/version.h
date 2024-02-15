@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Ziga Miklosic
+// Copyright (c) 2024 Ziga Miklosic
 // All Rights Reserved
 // This software is under MIT licence (https://opensource.org/licenses/MIT)
 ////////////////////////////////////////////////////////////////////////////////
@@ -6,8 +6,8 @@
 *@file      version.h
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
-*@date      24.08.2023
-*@version	V1.3.0
+*@date      15.02.2024
+*@version	V1.4.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -35,7 +35,7 @@
  * 	Module version
  */
 #define VER_VER_MAJOR		( 1 )
-#define VER_VER_MINOR		( 3 )
+#define VER_VER_MINOR		( 4 )
 #define VER_VER_DEVELOP		( 0 )
 
 /**
