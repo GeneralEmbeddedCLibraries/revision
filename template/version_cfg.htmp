@@ -14,7 +14,7 @@
 *@addtogroup VERSION_CFG
 * @{ <!-- BEGIN GROUP -->
 *
-* 	Configuration for revision
+*     Configuration for revision
 */
 ////////////////////////////////////////////////////////////////////////////////
 #ifndef __VERSION_CFG_H_
@@ -24,30 +24,30 @@
 
 
 /******************************************************************************
- * 	SET SOFTWARE VERSION
+ *     SET SOFTWARE VERSION
  *****************************************************************************/
-#define VER_SW_MAJOR		1
-#define VER_SW_MINOR		2
-#define VER_SW_DEVELOP		3
-#define VER_SW_TEST			4
+#define VER_SW_MAJOR        1
+#define VER_SW_MINOR        2
+#define VER_SW_DEVELOP      3
+#define VER_SW_TEST         4
 
 /******************************************************************************
- * 	SET HARDWARE VERSION
+ *     SET HARDWARE VERSION
  *****************************************************************************/
-#define VER_HW_MAJOR		5
-#define VER_HW_MINOR		6
-#define VER_HW_DEVELOP		7
-#define VER_HW_TEST			8
+#define VER_HW_MAJOR        5
+#define VER_HW_MINOR        6
+#define VER_HW_DEVELOP      7
+#define VER_HW_TEST         8
 
 
 /******************************************************************************
- * 	APPLICAION HEADER SETTINGS
+ *     APPLICAION HEADER SETTINGS
  *****************************************************************************/
 
 /**
- * 	Section name of app header
+ *     Section name of app header
  */
-#define VER_APP_HEAD_SECTION			( ".app_header" )
+#define VER_APP_HEAD_SECTION            ( ".app_header" )
 
 /**
  *  Packet compiler directive
@@ -55,25 +55,25 @@
 #define __VER_PACKED__                  __attribute__((__packed__))
 
 /******************************************************************************
- * 	PROJECT INFORMATIONS SETTINGS
+ *     PROJECT INFORMATIONS SETTINGS
  *****************************************************************************/
 
 /**
- * 	Enable/Disable project informations
+ *     Enable/Disable project informations
  */
-#define VER_CFG_USE_PROJ_INFO_EN		( 0 )
+#define VER_CFG_USE_PROJ_INFO_EN        ( 0 )
 
 /**
- * 	Project info max. size
+ *     Project info max. size
  *
- * 	Unit: bytes
+ *     Unit: bytes
  */
-#define VER_APP_PROJ_INFO_SIZE			( 2048 )
+#define VER_APP_PROJ_INFO_SIZE          ( 2048 )
 
 /**
- * 	Project info section
+ *     Project info section
  */
-#define VER_APP_PROJ_INFO_SECTION 		( ".proj_info" )
+#define VER_APP_PROJ_INFO_SECTION       ( ".proj_info" )
 
 
 // USER CODE END...
