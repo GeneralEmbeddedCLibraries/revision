@@ -7,14 +7,14 @@
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
 *@date      15.02.2024
-*@version	V1.4.0
+*@version   V1.4.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
 *@addtogroup VERSION
 * @{ <!-- BEGIN GROUP -->
 *
-* 	Revision API
+*     Revision API
 */
 ////////////////////////////////////////////////////////////////////////////////
 #ifndef __VERSION_H_
@@ -32,11 +32,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * 	Module version
+ *     Module version
  */
-#define VER_VER_MAJOR		( 1 )
-#define VER_VER_MINOR		( 4 )
-#define VER_VER_DEVELOP		( 0 )
+#define VER_VER_MAJOR       ( 1 )
+#define VER_VER_MINOR       ( 4 )
+#define VER_VER_DEVELOP     ( 0 )
 
 /**
  *  Application header
@@ -63,11 +63,11 @@ typedef struct __VER_PACKED__
 ////////////////////////////////////////////////////////////////////////////////
 // Functions
 ////////////////////////////////////////////////////////////////////////////////
-uint32_t 		version_get_sw				(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
-uint32_t 		version_get_hw				(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
-const char*		version_get_sw_str			(void);
-const char*		version_get_hw_str			(void);
-const char* 	version_get_proj_info_str	(void);
+uint32_t    version_get_sw              (uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
+uint32_t    version_get_hw              (uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
+const char* version_get_sw_str          (void);
+const char* version_get_hw_str          (void);
+const char* version_get_proj_info_str   (void);
 
 #endif // __VERSION_H_
 
