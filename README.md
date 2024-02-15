@@ -14,11 +14,11 @@ root/revision/revision/"module_space"
 ## **API**
 | API Functions | Description | Prototype |
 | --- | ----------- | ----- |
-| **version_get_sw** | Get SW version | uint32_t version_get_sw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |****
-| **version_get_hw** | Get HW version | uint32_t version_get_hw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |
-| **version_get_sw_str** | Get SW versioning string | const char* version_get_sw_str(void) |
-| **version_get_hw_str** | Get HW versioning string | const char* version_get_hw_str(void) |
-| **version_get_proj_info_str** | Get project information string | const char* version_get_proj_info_str(void) |
+| **version_get_sw**            | Get SW version                  | uint32_t version_get_sw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |****
+| **version_get_hw**            | Get HW version                  | uint32_t version_get_hw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |
+| **version_get_sw_str**        | Get SW versioning string        | const char* version_get_sw_str(void) |
+| **version_get_hw_str**        | Get HW versioning string        | const char* version_get_hw_str(void) |
+| **version_get_proj_info_str** | Get project information string  | const char* version_get_proj_info_str(void) |
 
 ## **Define Software & Hardware version**
 Software and hardware version can be changed in configuration file ***ver_cfg.h***:
