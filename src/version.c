@@ -58,7 +58,6 @@ static const uint32_t   gu32_sw_ver_num = (( VER_SW_MAJOR << 24 ) | ( VER_SW_MIN
 static const char *     gs_hw_ver_str   = "Hardware Version " VER_STR(VER_HW_MAJOR) "." VER_STR(VER_HW_MINOR) "." VER_STR(VER_HW_DEVELOP) "." VER_STR(VER_HW_TEST);
 static const uint32_t   gu32_hw_ver_num = (( VER_HW_MAJOR << 24 ) | ( VER_HW_MINOR << 16 ) | ( VER_HW_DEVELOP << 8 ) | ( VER_HW_TEST ));
 
-
 /**
  *     Application header informations
  */
@@ -71,7 +70,6 @@ static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SE
     .ver        = VER_APP_HEADER_VER,
     .crc        = 0,                    /* Calculated by post-build script */
 };
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions
