@@ -57,7 +57,7 @@ Revision module support two size of application header:
  1. To use application header V1 (256 bytes in size) use Revision V1.3.0
  2. To use application header V2 (512 bytes in size) use Revision V1.4.0
 
-### Application header structure:
+### Application header V2 structure:
 
 ![](doc/pic/Application_Header_Structure__V2.png)
 
