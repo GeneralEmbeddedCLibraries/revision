@@ -1,11 +1,11 @@
-<mxfile host="Electron" modified="2024-08-19T12:13:36.715Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.1 Chrome/112.0.5615.87 Electron/24.1.2 Safari/537.36" etag="qHsHsMgblnipTZdARqdw" version="21.2.1" type="device">
+<mxfile host="Electron" modified="2024-08-19T13:12:04.816Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.1 Chrome/112.0.5615.87 Electron/24.1.2 Safari/537.36" etag="z50X4dFN3CqHJjCBnCcj" version="21.2.1" type="device">
   <diagram name="Application Header" id="2I_s0Zhyki-mP-fCk9XN">
     <mxGraphModel dx="1195" dy="803" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="zRfLKT39qj6COamr5ovD-47" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="30" y="1190" width="720" height="400" as="geometry" />
+          <mxGeometry x="30" y="1190" width="740" height="400" as="geometry" />
         </mxCell>
         <mxCell id="9ab8QRaC9Be17Akn9t2G-50" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="190" y="710" width="300" height="220" as="geometry" />
@@ -109,7 +109,7 @@
         <mxCell id="Z973CN9EzXeay_wzJx9E-17" value="0x1FD" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=3;fontFamily=Lucida Console;fontStyle=2" parent="1" vertex="1">
           <mxGeometry x="772" y="860" width="38" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="zRfLKT39qj6COamr5ovD-2" value="APPLICATION HEADER&lt;br&gt;(256 bytes)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;horizontal=0;fontStyle=3;fillColor=#66FF66;fontSize=14;fontFamily=Lucida Console;" vertex="1" parent="1">
+        <mxCell id="zRfLKT39qj6COamr5ovD-2" value="APPLICATION HEADER&lt;br style=&quot;font-size: 15px;&quot;&gt;(256 bytes)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;horizontal=0;fontStyle=3;fillColor=#66FF66;fontSize=15;fontFamily=Lucida Console;" vertex="1" parent="1">
           <mxGeometry x="40" y="1200" width="40" height="380" as="geometry" />
         </mxCell>
         <mxCell id="zRfLKT39qj6COamr5ovD-3" value="APP HEADER VERSION (u8)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" vertex="1" parent="1">

@@ -34,7 +34,7 @@
 /**
  *  Application header version
  */
-#define VER_APP_HEADER_VER          ( 2 )
+#define VER_APP_HEADER_VER          ( 1 )
 
 /**
  *     Convert value to string
