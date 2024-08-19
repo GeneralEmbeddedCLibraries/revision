@@ -63,12 +63,21 @@ static const uint32_t   gu32_hw_ver_num = (( VER_HW_MAJOR << 24 ) | ( VER_HW_MIN
  */
 static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SECTION ))) g_app_header =
 {
-    .sw_ver     = gu32_sw_ver_num,
-    .hw_ver     = gu32_hw_ver_num,
-    .app_size   = 0,                    /* Calculated by post-build script */
-    .app_crc    = 0,                    /* Calculated by post-build script */
-    .ver        = VER_APP_HEADER_VER,
-    .crc        = 0,                    /* Calculated by post-build script */
+    .ctrl =
+    {
+        .crc = 0U,                       /**<Filled by post-build script */
+        .ver = VER_APP_HEADER_VER,
+    },
+
+    .data =
+    {
+   		.sw_ver     = gu32_sw_ver_num,
+   		.hw_ver     = gu32_hw_ver_num,
+   		.app_size   = 0U,               /**<Filled by post-build script */
+   		.app_crc    = 0U,               /**<Filled by post-build script */
+   		.enc_type   = 0U,               /**<Filled by post-build script */
+   		.sig_type   = 0U,               /**<Filled by post-build script */
+    },
 };
 
 ////////////////////////////////////////////////////////////////////////////////

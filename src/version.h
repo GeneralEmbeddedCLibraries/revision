@@ -39,6 +39,28 @@
 #define VER_VER_DEVELOP     ( 0 )
 
 /**
+ *  Encryption type
+ */
+typedef enum
+{
+    eVER_ENC_TYPE_NONE = 0,     /**<No encryption */
+    eVER_ENC_TYPE_AES_CTR,      /**<AES-CTR encryption type */
+
+    eVER_ENC_TYPE_NUM_OF,
+} ver_enc_type_t;
+
+/**
+ *  Signature type
+ */
+typedef enum
+{
+    eVER_SIG_TYPE_NONE = 0,     /**<No encryption */
+    eVER_SIG_TYPE_ECSDA,        /**<ECSDA signature type */
+
+    eVER_SIG_TYPE_NUM_OF,
+} ver_sig_type_t;
+
+/**
  *  Application header
  *
  * @note    Purpose of application header is to store informations
@@ -46,18 +68,40 @@
  *          gives you the insights of the application itself by looking
  *          only into output file such as Intel HEX type or binary.
  *
- *
- *  Size: 512 bytes
+ *  Size: 256 bytes
  */
 typedef struct __VER_PACKED__
 {
-    uint32_t    sw_ver;             /**<Software (application) version */
-    uint32_t    hw_ver;             /**<Hardware version */
-    uint32_t    app_size;           /**<Size of application in bytes - shall be calculated by post-build script */
-    uint32_t    app_crc;            /**<Application CRC32 - calculated by post-build script */
-    uint8_t     reserved[494];      /**<Reserved space in application header */
-    uint8_t     ver;                /**<Application header version */
-    uint8_t     crc;                /**<Application header CRC8 */
+    /**     Control fields
+     *
+     *  Sizeof: 8 bytes
+     *
+     *  @note   Are fixed, shall not be change during different versions of application header
+     */
+    struct
+    {
+        uint8_t     crc;                /**<Application header CRC8 */
+        uint8_t     ver;                /**<Application header version */
+        uint8_t     res[6];             /**<Reserved fields */
+    } ctrl;
+
+    /**     Data fields
+     *
+     *  Sizeof: 248 bytes
+     *
+     *  @note   Data fields can be re-sized between different versions of application header.
+     */
+    struct
+    {
+        uint32_t sw_ver;        /**<Software (application) version */
+        uint32_t hw_ver;        /**<Hardware version */
+        uint32_t app_size;      /**<Size of application in bytes - shall be calculated by post-build script */
+        uint32_t app_crc;       /**<Application CRC32 - calculated by post-build script */
+        uint8_t  enc_type;      /**<Encryption type. Shall be value of @ver_enc_type_t. Filled by post-build script */
+        uint8_t  sig_type;      /**<Signature type. Shall be value of @ver_sig_type_t. Filled by post-build script */
+        uint8_t  res[230];      /**<Reserved space in application header */
+    } data;
+
 } ver_app_header_t;
 
 ////////////////////////////////////////////////////////////////////////////////
