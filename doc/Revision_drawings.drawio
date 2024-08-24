@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-08-20T14:20:11.090Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="h0IZZ2pNlIPZgRJgfzsd" version="22.0.2" type="device">
+<mxfile host="Electron" modified="2024-08-24T06:27:24.807Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.2 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="NgYvwFYVsqygNVrJPoXj" version="22.0.2" type="device">
   <diagram name="Application Header" id="2I_s0Zhyki-mP-fCk9XN">
-    <mxGraphModel dx="978" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1668" dy="1106" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -112,7 +112,7 @@
         <mxCell id="zRfLKT39qj6COamr5ovD-2" value="APPLICATION HEADER&lt;br style=&quot;font-size: 15px;&quot;&gt;(256 bytes)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;horizontal=0;fontStyle=3;fillColor=#66FF66;fontSize=15;fontFamily=Lucida Console;" parent="1" vertex="1">
           <mxGeometry x="40" y="1200" width="40" height="380" as="geometry" />
         </mxCell>
-        <mxCell id="zRfLKT39qj6COamr5ovD-3" value="APP HEADER VERSION (u8)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" parent="1" vertex="1">
+        <mxCell id="zRfLKT39qj6COamr5ovD-3" value="VERSION = V1 (u8)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" parent="1" vertex="1">
           <mxGeometry x="120" y="1220" width="210" height="20" as="geometry" />
         </mxCell>
         <mxCell id="zRfLKT39qj6COamr5ovD-4" value="SW (APP) VERSION (u32)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" parent="1" vertex="1">
@@ -139,7 +139,7 @@
         <mxCell id="zRfLKT39qj6COamr5ovD-19" value="SIGNATURE TYPE (u8)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#FFCC99;fontStyle=1;align=right;" parent="1" vertex="1">
           <mxGeometry x="120" y="1450" width="210" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="zRfLKT39qj6COamr5ovD-21" value="Reserved&lt;br&gt;(8 bytes)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#CCCCCC;fontStyle=1" parent="1" vertex="1">
+        <mxCell id="zRfLKT39qj6COamr5ovD-21" value="Reserved&lt;br&gt;(6 bytes)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;fontFamily=Lucida Console;fillColor=#CCCCCC;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="120" y="1240" width="210" height="110" as="geometry" />
         </mxCell>
         <mxCell id="zRfLKT39qj6COamr5ovD-22" value="CONTROL FIELDS&lt;br&gt;(8 bytes)" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=1;horizontal=0;fontStyle=3;fillColor=#e51400;fontSize=14;fontFamily=Lucida Console;strokeColor=#B20000;fontColor=#ffffff;" parent="1" vertex="1">
