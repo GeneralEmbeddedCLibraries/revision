@@ -53,10 +53,6 @@ It is prefered to used "Semantic Versioning" (more about that [here](https://sem
 ## **Application header**
 Application header contains information about SW version, application size and output image (.hex file) CRC value. Therefore it can be used for data integrity validation. Checksum and application size makes end build application more suitable for bootloader support. Additionally SW version of running application can be acquired easily by looking into outputed .hex file at specific location all thanks to application header.
 
-Revision module support two size of application header:
- 1. To use application header V1 (256 bytes in size) use Revision V1.3.0
- 2. To use application header V2 (512 bytes in size) use Revision V1.4.0
-
 ### Application header structure:
 
 ![](doc/pic/Application_Header_Structure__NEW_V1.png)

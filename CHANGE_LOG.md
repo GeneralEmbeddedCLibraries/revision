@@ -9,6 +9,8 @@ and this project/module adheres to [Semantic Versioning](https://semver.org/spec
 
 ### Changes
  - Application header structure completely changed (therefore increased major version)
+ - Application header is not fixed size of 256 bytes. Issues with vector offseting is fixed with
+   proper linking and bootloader settings
 
 
 ---
