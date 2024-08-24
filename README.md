@@ -57,9 +57,9 @@ Revision module support two size of application header:
  1. To use application header V1 (256 bytes in size) use Revision V1.3.0
  2. To use application header V2 (512 bytes in size) use Revision V1.4.0
 
-### Application header V2 structure:
+### Application header structure:
 
-![](doc/pic/Application_Header_Structure__V2.png)
+![](doc/pic/Application_Header_Structure__NEW_V1.png)
 
 ### Definition of application header:
 ```C
@@ -71,18 +71,40 @@ Revision module support two size of application header:
  *          gives you the insights of the application itself by looking
  *          only into output file such as Intel HEX type or binary.
  *
- *
- *  Size: 512 bytes
+ *  Size: 256 bytes
  */
 typedef struct __VER_PACKED__
 {
-    uint32_t    sw_ver;             /**<Software (application) version */
-    uint32_t    hw_ver;             /**<Hardware version */
-    uint32_t    app_size;           /**<Size of application in bytes - shall be calculated by post-build script */
-    uint32_t    app_crc;            /**<Application CRC32 - calculated by post-build script */
-    uint8_t     reserved[494];      /**<Reserved space in application header */
-    uint8_t     ver;                /**<Application header version */
-    uint8_t     crc;                /**<Application header CRC8 */
+    /**     Control fields
+     *
+     *  Sizeof: 8 bytes
+     *
+     *  @note   Are fixed, shall not be change during different versions of application header
+     */
+    struct
+    {
+        uint8_t     crc;                /**<Application header CRC8 */
+        uint8_t     ver;                /**<Application header version */
+        uint8_t     res[6];             /**<Reserved fields */
+    } ctrl;
+
+    /**     Data fields
+     *
+     *  Sizeof: 248 bytes
+     *
+     *  @note   Data fields can be re-sized between different versions of application header.
+     */
+    struct
+    {
+        uint32_t sw_ver;        /**<Software (application) version */
+        uint32_t hw_ver;        /**<Hardware version */
+        uint32_t app_size;      /**<Size of application in bytes - shall be calculated by post-build script */
+        uint32_t app_crc;       /**<Application CRC32 - calculated by post-build script */
+        uint8_t  enc_type;      /**<Encryption type. Shall be value of @ver_enc_type_t. Filled by post-build script */
+        uint8_t  sig_type;      /**<Signature type. Shall be value of @ver_sig_type_t. Filled by post-build script */
+        uint8_t  sig_hash[32];  /**<Signature hash value. Filled by post-build script */
+        uint8_t  res[198];      /**<Reserved space in application header */
+    } data;
 } ver_app_header_t;
 ```
 
