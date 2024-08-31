@@ -21,15 +21,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "version.h"
 
 #if ( 1 == VER_CFG_USE_PROJ_INFO_EN )
 #include "proj_info.h"
 #endif
 
+#if ( 1 == VER_CFG_BOOT_PRESENT )
+    #include "middleware/boot/boot/src/boot.h"
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+
+#if ( 1 == VER_CFG_BOOT_PRESENT )
+    /**
+     *  Compatibility check with BOOT module
+     *
+     *  Support version V0.2.x up
+     */
+
+    // TODO: Update compatibility checks!
+    _Static_assert( 0 == BOOT_VER_MAJOR );
+    _Static_assert( 2 <= BOOT_VER_MINOR );
+#endif
 
 /**
  *  Application header version
@@ -119,7 +136,15 @@ ver_t version_get_hw(void)
 ////////////////////////////////////////////////////////////////////////////////
 ver_t version_get_boot(void)
 {
-    const ver_t boot_ver = { .U = 0 };
+    ver_t boot_ver = { .U = 0 };
+
+    #if ( 1 == VER_CFG_BOOT_PRESENT )
+        if ( eBOOT_OK != boot_shared_mem_get_boot_ver( &boot_ver.U ))
+        {
+            boot_ver.U = 0;
+        }
+    #endif
+
     return boot_ver;
 }
 
@@ -145,6 +170,24 @@ const char* version_get_sw_str(void)
 const char* version_get_hw_str(void)
 {
     return gs_hw_ver_str;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ *  @brief  Get bootloader SW version string
+ *
+ * @return  gs_hw_ver_str - Software version string
+ */
+////////////////////////////////////////////////////////////////////////////////
+const char* version_get_boot_str(void)
+{
+    const ver_t boot_ver = version_get_boot();
+    static char boot_ver_str[64] = "";
+
+    // Assembly boot version string
+    snprintf(boot_ver_str, sizeof(boot_ver_str), "Bootloader (SW) Version %d.%d.%d.%d", boot_ver.maj, boot_ver.min, boot_ver.dev, boot_ver.test );
+
+    return boot_ver_str;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
