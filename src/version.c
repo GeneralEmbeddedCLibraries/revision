@@ -88,34 +88,12 @@ static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SE
 /**
  *  @brief  Get software version
  *
- * @param[out]  p_major     - Pointer to major SW version
- * @param[out]  p_minor     - Pointer to minor SW version
- * @param[out]  p_develop   - Pointer to develop SW version
- * @param[out]  p_test      - Pointer to test SW version
- * @return      sw_ver      - Complete 32-bit number of SW version
+ * @return      Application software version
  */
 ////////////////////////////////////////////////////////////////////////////////
-uint32_t version_get_sw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test)
+ver_t version_get_sw(void)
 {
-    const uint32_t sw_ver = gu32_sw_ver_num;
-
-    if ( NULL != p_major )
-    {
-        *p_major = (uint8_t)(( gu32_sw_ver_num >> 24U ) & 0xFFU );
-    }
-    if ( NULL != p_minor )
-    {
-        *p_minor = (uint8_t)(( gu32_sw_ver_num >> 16U ) & 0xFFU );
-    }
-    if ( NULL != p_develop )
-    {
-        *p_develop = (uint8_t)(( gu32_sw_ver_num >> 8U ) & 0xFFU );
-    }
-    if ( NULL != p_test )
-    {
-        *p_test = (uint8_t)(( gu32_sw_ver_num >> 0U ) & 0xFFU );
-    }
-
+    const ver_t sw_ver = { .U = gu32_sw_ver_num };
     return sw_ver;
 }
 
@@ -123,35 +101,26 @@ uint32_t version_get_sw(uint8_t * const p_major, uint8_t * const p_minor, uint8_
 /**
  *  @brief  Get hardware version
  *
- * @param[out]  p_major     - Pointer to major HW version
- * @param[out]  p_minor     - Pointer to minor HW version
- * @param[out]  p_develop   - Pointer to develop HW version
- * @param[out]  p_test      - Pointer to test HW version
- * @return      sw_ver      - Complete 32-bit number of HW version
+ * @return      Hardware version
  */
 ////////////////////////////////////////////////////////////////////////////////
-uint32_t version_get_hw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test)
+ver_t version_get_hw(void)
 {
-    const uint32_t hw_ver = gu32_hw_ver_num;
-
-    if ( NULL != p_major )
-    {
-        *p_major = (uint8_t)(( gu32_hw_ver_num >> 24U ) & 0xFFU );
-    }
-    if ( NULL != p_minor )
-    {
-        *p_minor = (uint8_t)(( gu32_hw_ver_num >> 16U ) & 0xFFU );
-    }
-    if ( NULL != p_develop )
-    {
-        *p_develop = (uint8_t)(( gu32_hw_ver_num >> 8U ) & 0xFFU );
-    }
-    if ( NULL != p_test )
-    {
-        *p_test = (uint8_t)(( gu32_hw_ver_num >> 0U ) & 0xFFU );
-    }
-
+    const ver_t hw_ver = { .U = gu32_hw_ver_num };
     return hw_ver;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ *  @brief  Get bootloader software version
+ *
+ * @return      Bootloader SW version
+ */
+////////////////////////////////////////////////////////////////////////////////
+ver_t version_get_boot(void)
+{
+    const ver_t boot_ver = { .U = 0 };
+    return boot_ver;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

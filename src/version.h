@@ -109,11 +109,27 @@ typedef struct __VER_PACKED__
  */
 _Static_assert( 256 == sizeof(ver_app_header_t));
 
+/**
+ *  Semantic versioning
+ */
+typedef union
+{
+    struct
+    {
+        uint8_t test;  /**<Test SW version */
+        uint8_t dev;   /**<Develop SW version */
+        uint8_t min;   /**<Minor SW version */
+        uint8_t maj;   /**<Major SW version */
+    };
+    uint32_t U; /**<Complete version number */
+} ver_t;
+
 ////////////////////////////////////////////////////////////////////////////////
 // Functions
 ////////////////////////////////////////////////////////////////////////////////
-uint32_t    version_get_sw              (uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
-uint32_t    version_get_hw              (uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
+ver_t       version_get_sw              (void);
+ver_t       version_get_hw              (void);
+ver_t       version_get_boot            (void);
 const char* version_get_sw_str          (void);
 const char* version_get_hw_str          (void);
 const char* version_get_proj_info_str   (void);
