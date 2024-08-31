@@ -182,10 +182,13 @@ const char* version_get_hw_str(void)
 const char* version_get_boot_str(void)
 {
     const ver_t boot_ver = version_get_boot();
-    static char boot_ver_str[64] = "";
+    static char boot_ver_str[64] = "Bootloader not present!";
 
-    // Assembly boot version string
-    snprintf(boot_ver_str, sizeof(boot_ver_str), "Bootloader (SW) Version %d.%d.%d.%d", boot_ver.maj, boot_ver.min, boot_ver.dev, boot_ver.test );
+    if ( 0 != boot_ver.U )
+    {
+        // Assembly boot version string
+        snprintf(boot_ver_str, sizeof(boot_ver_str), "Bootloader (SW) Version %d.%d.%d.%d", boot_ver.maj, boot_ver.min, boot_ver.dev, boot_ver.test );
+    }
 
     return boot_ver_str;
 }
