@@ -121,7 +121,7 @@ typedef union
         uint8_t min;   /**<Minor SW version */
         uint8_t maj;   /**<Major SW version */
     };
-    uint32_t U; /**<Complete version number */
+    uint32_t U; /**<Complete version number, accessed as U32 */
 } ver_t;
 
 ////////////////////////////////////////////////////////////////////////////////
