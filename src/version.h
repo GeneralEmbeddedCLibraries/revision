@@ -39,6 +39,17 @@
 #define VER_VER_DEVELOP     ( 0 )
 
 /**
+ *  Image type
+ */
+typedef enum
+{
+    eVER_IMAGE_TYPE_APP = 0,    /**<Application */
+    eVER_IMAGE_TYPE_CUSTOM,     /**<Custom */
+
+    eVER_IMAGE_TYPE_NUM_OF,
+} ver_image_type_t;
+
+/**
  *  Encryption type
  */
 typedef enum
@@ -61,7 +72,7 @@ typedef enum
 } ver_sig_type_t;
 
 /**
- *  Application header
+ *  Image header
  *
  * @note    Purpose of application header is to store informations
  *          of software in HEX output file at specific location. This
@@ -76,13 +87,15 @@ typedef struct __VER_PACKED__
      *
      *  Sizeof: 8 bytes
      *
-     *  @note   Are fixed, shall not be change during different versions of application header
+     *  @note   Are fixed, shall not be change during different versions of application header.
+     *          Can be added in reserved space.
      */
     struct
     {
         uint8_t     crc;                /**<Application header CRC8 */
         uint8_t     ver;                /**<Application header version */
-        uint8_t     res[6];             /**<Reserved fields */
+        uint8_t     image_type;         /**<Image type. Shall be value of @ver_image_type_t. Filled by post-build script */
+        uint8_t     res[5];             /**<Reserved fields */
     } ctrl;
 
     /**     Data fields
@@ -95,19 +108,22 @@ typedef struct __VER_PACKED__
     {
         uint32_t sw_ver;        /**<Software (application) version */
         uint32_t hw_ver;        /**<Hardware version */
-        uint32_t app_size;      /**<Size of application in bytes - shall be calculated by post-build script */
-        uint32_t app_crc;       /**<Application CRC32 - calculated by post-build script */
+        uint32_t image_size;    /**<Size of image in bytes - shall be calculated by post-build script */
+        uint32_t image_addr;    /**<Start address of image. Used only with "custom" image type */
+        uint32_t image_crc;     /**<Image CRC32- calculated by post-build script */
         uint8_t  enc_type;      /**<Encryption type. Shall be value of @ver_enc_type_t. Filled by post-build script */
         uint8_t  sig_type;      /**<Signature type. Shall be value of @ver_sig_type_t. Filled by post-build script */
-        uint8_t  sig_hash[32];  /**<Signature hash value. Filled by post-build script */
-        uint8_t  res[198];      /**<Reserved space in application header */
+        uint8_t  signature[64]; /**<Image signature value. Filled by post-build script only. Used only for "sig_type" other than "none" */
+        uint8_t  hash[32];      /**<Image hash (SHA256). Filled by post-build script only */
+        uint8_t  git_sha[8];    /**<Git commit hash. Filled by post-build script only */
+        uint8_t  res[122];      /**<Reserved space in application header */
     } data;
-} ver_app_header_t;
+} ver_image_header_t;
 
 /**
- *  Application header size check
+ *  Image header size check
  */
-_Static_assert( 256 == sizeof(ver_app_header_t));
+_Static_assert( 256 == sizeof(ver_image_header_t));
 
 /**
  *  Semantic versioning
@@ -134,6 +150,11 @@ const char* version_get_sw_str          (void);
 const char* version_get_hw_str          (void);
 const char* version_get_boot_str        (void);
 const char* version_get_proj_info_str   (void);
+
+// TODO: Add here validation of image header...
+// API to get all fields...
+// Check CRC only once on first call of any of the API functions...
+// Then remove from "boot" module afterwards...
 
 #endif // __VERSION_H_
 

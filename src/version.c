@@ -49,9 +49,9 @@
 #endif
 
 /**
- *  Application header version
+ *  Image header version
  */
-#define VER_APP_HEADER_VER          ( 1 )
+#define VER_IMAGE_HEADER_VER          ( 1 )
 
 /**
  *     Convert value to string
@@ -76,24 +76,27 @@ static const char *     gs_hw_ver_str   = "Hardware Version " VER_STR(VER_HW_MAJ
 static const uint32_t   gu32_hw_ver_num = (( VER_HW_MAJOR << 24 ) | ( VER_HW_MINOR << 16 ) | ( VER_HW_DEVELOP << 8 ) | ( VER_HW_TEST ));
 
 /**
- *     Application header informations
+ *     Image header informations
  */
-static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SECTION ))) g_app_header =
+static volatile const ver_image_header_t __attribute__ (( section( VER_IMAGE_HEAD_SECTION ))) g_image_header =
 {
     .ctrl =
     {
         .crc = 0U,                       /**<Filled by post-build script */
-        .ver = VER_APP_HEADER_VER,
+        .ver = VER_IMAGE_HEADER_VER,
     },
 
     .data =
     {
    		.sw_ver     = gu32_sw_ver_num,
    		.hw_ver     = gu32_hw_ver_num,
-   		.app_size   = 0U,               /**<Filled by post-build script */
-   		.app_crc    = 0U,               /**<Filled by post-build script */
+   		.image_size = 0U,               /**<Filled by post-build script */
+   		.image_crc  = 0U,               /**<Filled by post-build script */
    		.enc_type   = 0U,               /**<Filled by post-build script */
    		.sig_type   = 0U,               /**<Filled by post-build script */
+   		.signature  = {0},              /**<Filled by post-build script */
+   		.hash       = {0},              /**<Filled by post-build script */
+   		.git_sha    = {0},              /**<Filled by post-build script */
     },
 };
 
