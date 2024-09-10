@@ -34,7 +34,7 @@
 /**
  *     Module version
  */
-#define VER_VER_MAJOR       ( 1 )
+#define VER_VER_MAJOR       ( 1 )       // TODO: Increase to V2.0.0
 #define VER_VER_MINOR       ( 4 )
 #define VER_VER_DEVELOP     ( 0 )
 
@@ -47,6 +47,7 @@ typedef enum
     eVER_IMAGE_TYPE_CUSTOM,     /**<Custom */
 
     eVER_IMAGE_TYPE_NUM_OF,
+    eVER_IMAGE_TYPE_INVALID,
 } ver_image_type_t;
 
 /**
@@ -58,6 +59,7 @@ typedef enum
     eVER_ENC_TYPE_AES_CTR,      /**<AES-CTR encryption type */
 
     eVER_ENC_TYPE_NUM_OF,
+    eVER_ENC_TYPE_INVALID,
 } ver_enc_type_t;
 
 /**
@@ -69,6 +71,7 @@ typedef enum
     eVER_SIG_TYPE_ECSDA,        /**<ECSDA signature type */
 
     eVER_SIG_TYPE_NUM_OF,
+    eVER_SIG_TYPE_INVALID,
 } ver_sig_type_t;
 
 /**
@@ -155,6 +158,9 @@ const char* version_get_proj_info_str   (void);
 // API to get all fields...
 // Check CRC only once on first call of any of the API functions...
 // Then remove from "boot" module afterwards...
+
+// NOTE: Return NULL if CRC is corrupted, or header version is not possible to parse!!!
+const ver_image_header_t * version_get_img_hdr(void);
 
 #endif // __VERSION_H_
 
