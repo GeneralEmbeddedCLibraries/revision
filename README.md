@@ -55,7 +55,7 @@ Application header contains information about SW version, application size and o
 
 ### Application header structure:
 
-![](doc/pic/Application_Header_Structure_V1.png)
+![](doc/pic/Application_Header_Structure__NEW_V1.png)
 
 ### Definition of application header:
 ```C
