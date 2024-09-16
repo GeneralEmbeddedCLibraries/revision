@@ -26,10 +26,10 @@
 /******************************************************************************
  * 	SET SOFTWARE VERSION
  *****************************************************************************/
-#define VER_SW_MAJOR		0
-#define VER_SW_MINOR		1
-#define VER_SW_DEVELOP		0
-#define VER_SW_TEST			0
+#define VER_SW_MAJOR		1
+#define VER_SW_MINOR		2
+#define VER_SW_DEVELOP		3
+#define VER_SW_TEST			4
 
 /******************************************************************************
  * 	SET HARDWARE VERSION
@@ -45,16 +45,14 @@
  *****************************************************************************/
 
 /**
- * 	Valid app header signature
- *
- * 	@note	Must be 32-bit is size!
+ *     Section name of image header
  */
-#define VER_APP_HEAD_SIGN				((uint32_t)( 0xFACEC0DEUL ))
+#define VER_IMAGE_HEAD_SECTION            ( ".app_header" )
 
 /**
- * 	Section name of app header
+ *  Packet compiler directive
  */
-#define VER_APP_HEAD_SECTION			( ".app_header" )
+#define __VER_PACKED__                  __attribute__((__packed__))
 
 
 /******************************************************************************
@@ -91,15 +89,7 @@
  *  @note   Shall be enabled only in application projects, as it makes no sense in
  *          bootloader projects.
  */
-#define VER_CFG_BOOT_PRESENT            ( 1 )
-
-#ifdef __BOOTLOADER_SUPPORT__
-    #undef VER_CFG_BOOT_PRESENT
-    #define VER_CFG_BOOT_PRESENT 1
-#else
-    #undef VER_CFG_BOOT_PRESENT
-    #define VER_CFG_BOOT_PRESENT 0
-#endif
+#define VER_CFG_BOOT_PRESENT            ( 0 )
 
 // USER CODE END...
 
