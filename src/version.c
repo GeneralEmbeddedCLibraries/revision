@@ -49,7 +49,7 @@
 #endif
 
 /**
- *  Image header version
+ *      Image header version
  */
 #define VER_IMAGE_HEADER_VER          ( 1 )
 
@@ -58,6 +58,16 @@
  */
 #define VER_STR_HELPER(x)           #x
 #define VER_STR(x)                  VER_STR_HELPER(x)
+
+/**
+ *      Image header validation results
+ */
+typedef enum
+{
+    eVER_RESULT_NONE = 0,   /**<Validation not jet performed */
+    eVER_RESULT_VALID,      /**<Image header valid */
+    eVER_RESULT_INVALID,    /**<Image header in-valid/corrupted */
+} ver_result_t;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -101,7 +111,94 @@ static volatile const ver_image_header_t __attribute__ (( section( VER_IMAGE_HEA
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+// Function prototypes
+////////////////////////////////////////////////////////////////////////////////
+static uint8_t version_calc_crc(const uint8_t * const p_data, const uint16_t size);
+
+////////////////////////////////////////////////////////////////////////////////
 // Functions
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+*       Calculate CRC-8
+*
+* @param[in]    p_data  - Pointer to data
+* @param[in]    size    - Size of data to calc crc
+* @return       crc8    - Calculated CRC
+*/
+////////////////////////////////////////////////////////////////////////////////
+static uint8_t version_calc_crc(const uint8_t * const p_data, const uint16_t size)
+{
+    const   uint8_t poly    = 0x07U;    // CRC-8-CCITT
+    const   uint8_t seed    = 0xB6U;    // Custom seed
+            uint8_t crc8    = seed;
+
+    for (uint16_t i = 0; i < size; i++)
+    {
+        crc8 = ( crc8 ^ p_data[i] );
+
+        for (uint16_t j = 0U; j < 8U; j++)
+        {
+            if ( crc8 & 0x80U )
+            {
+                crc8 = (( crc8 << 1U ) ^ poly );
+            }
+            else
+            {
+                crc8 = ( crc8 << 1U );
+            }
+        }
+    }
+
+    return crc8;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+*       Check image header integrity
+*
+* @return       validy_result - Result of data integrity check
+*/
+////////////////////////////////////////////////////////////////////////////////
+static ver_result_t version_check_img_header(void)
+{
+    static ver_result_t validy_result = eVER_RESULT_NONE;
+
+    // Perform integrity check only once
+    if ( eVER_RESULT_NONE == validy_result )
+    {
+        // Calculate CRC
+        // NOTE: Skip CRC at the end and start calculation at version field!
+        const uint8_t crc_calc = version_calc_crc((uint8_t*) &g_image_header.ctrl.ver, ( sizeof(ver_image_header_t) - 1U ));
+
+        // Image header valid
+        if ( crc_calc == g_image_header.ctrl.crc )
+        {
+            validy_result = eVER_RESULT_VALID;
+        }
+        else
+        {
+            validy_result = eVER_RESULT_INVALID;
+        }
+    }
+
+    return validy_result;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+* @} <!-- END GROUP -->
+*/
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+*@addtogroup VERSION_API
+* @{ <!-- BEGIN GROUP -->
+*
+*   Following function are part of Version API.
+*/
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -214,6 +311,34 @@ const char* version_get_proj_info_str(void)
     #endif
 
     return proj_info_str;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ *  @brief  Get image header informations
+ *
+ *  @note   Function return NULL if image header is corrupted or missing!
+ *
+ *  @note   This functions return image header linker into internal flash,
+ *          location defined with "VER_IMAGE_HEAD_SECTION" configuration.
+ *
+ * @return  p_image_header - Pointer to image header
+ */
+////////////////////////////////////////////////////////////////////////////////
+const ver_image_header_t * version_get_img_header(void)
+{
+    ver_image_header_t * p_image_header = NULL;
+
+    // Check image header
+    const ver_result_t img_header_valid = version_check_img_header();
+
+    // Return data only if header valid
+    if ( eVER_RESULT_VALID == img_header_valid )
+    {
+        p_image_header = (ver_image_header_t*) &g_image_header;
+    }
+
+    return p_image_header;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

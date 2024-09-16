@@ -146,21 +146,14 @@ typedef union
 ////////////////////////////////////////////////////////////////////////////////
 // Functions
 ////////////////////////////////////////////////////////////////////////////////
-ver_t       version_get_sw              (void);
-ver_t       version_get_hw              (void);
-ver_t       version_get_boot            (void);
-const char* version_get_sw_str          (void);
-const char* version_get_hw_str          (void);
-const char* version_get_boot_str        (void);
-const char* version_get_proj_info_str   (void);
-
-// TODO: Add here validation of image header...
-// API to get all fields...
-// Check CRC only once on first call of any of the API functions...
-// Then remove from "boot" module afterwards...
-
-// NOTE: Return NULL if CRC is corrupted, or header version is not possible to parse!!!
-const ver_image_header_t * version_get_img_hdr(void);
+ver_t       				version_get_sw              (void);
+ver_t       				version_get_hw              (void);
+ver_t       				version_get_boot            (void);
+const char* 				version_get_sw_str          (void);
+const char* 				version_get_hw_str          (void);
+const char* 				version_get_boot_str        (void);
+const char* 				version_get_proj_info_str   (void);
+const ver_image_header_t *  version_get_img_header      (void);
 
 #endif // __VERSION_H_
 
