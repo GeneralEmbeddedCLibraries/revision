@@ -93,7 +93,7 @@ typedef struct __VER_PACKED__
      *  @note   Are fixed, shall not be change during different versions of application header.
      *          Can be added in reserved space.
      */
-    struct
+    struct __VER_PACKED__
     {
         uint8_t     crc;                /**<Application header CRC8 */
         uint8_t     ver;                /**<Application header version */
@@ -107,19 +107,20 @@ typedef struct __VER_PACKED__
      *
      *  @note   Data fields can be re-sized between different versions of application header.
      */
-    struct
+    struct __VER_PACKED__
     {
-        uint32_t sw_ver;        /**<Software (application) version */
-        uint32_t hw_ver;        /**<Hardware version */
-        uint32_t image_size;    /**<Size of image in bytes - shall be calculated by post-build script */
-        uint32_t image_addr;    /**<Start address of image. Used only with "custom" image type */
-        uint32_t image_crc;     /**<Image CRC32- calculated by post-build script */
-        uint8_t  enc_type;      /**<Encryption type. Shall be value of @ver_enc_type_t. Filled by post-build script */
-        uint8_t  sig_type;      /**<Signature type. Shall be value of @ver_sig_type_t. Filled by post-build script */
-        uint8_t  signature[64]; /**<Image signature value. Filled by post-build script only. Used only for "sig_type" other than "none" */
-        uint8_t  hash[32];      /**<Image hash (SHA256). Filled by post-build script only */
-        uint8_t  git_sha[8];    /**<Git commit hash. Filled by post-build script only */
-        uint8_t  res[122];      /**<Reserved space in application header */
+        uint32_t sw_ver;        	/**<Software (application) version */
+        uint32_t hw_ver;        	/**<Hardware version */
+        uint32_t image_size;    	/**<Size of image in bytes - shall be calculated by post-build script */
+        uint32_t image_addr;    	/**<Start address of image. Used only with "custom" image type */
+        uint32_t image_crc;     	/**<Image CRC32- calculated by post-build script */
+        uint8_t  enc_type;      	/**<Encryption type. Shall be value of @ver_enc_type_t. Filled by post-build script */
+        uint8_t  sig_type;      	/**<Signature type. Shall be value of @ver_sig_type_t. Filled by post-build script */
+        uint8_t  signature[64]; 	/**<Image signature value. Filled by post-build script only. Used only for "sig_type" other than "none" */
+        uint8_t  hash[32];      	/**<Image hash (SHA256). Filled by post-build script only */
+        uint8_t  git_sha[8];    	/**<Git commit hash. Filled by post-build script only */
+        uint32_t enc_image_crc; 	/**<Encrypted image CRC32- calculated by post-build script  */
+        uint8_t  res[118];      	/**<Reserved space in application header */
     } data;
 } ver_image_header_t;
 
