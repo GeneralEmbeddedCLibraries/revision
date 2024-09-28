@@ -7,12 +7,15 @@ and this project/module adheres to [Semantic Versioning](https://semver.org/spec
 ---
 ## V2.0.0 - 28.09.2024
 
+### Notice
+Image (application) header is not back-compatible with old Revision module V1.x.x!!!
+
 ### Added
 - New API function to get bootloader version (if present)
 
 ### Changes
  - Application header structure completely changed (therefore increased major version)
- - Application header is not fixed size of 256 bytes. Issues with vector offseting is fixed with
+ - Application header is now fixed size of 256 bytes. Issues with vector offseting is fixed with
    proper linking and bootloader settings
 
 ---
