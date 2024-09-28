@@ -6,8 +6,8 @@
 *@file      version.h
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
-*@date      15.02.2024
-*@version   V1.4.0
+*@date      28.09.2024
+*@version   V2.0.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /*!

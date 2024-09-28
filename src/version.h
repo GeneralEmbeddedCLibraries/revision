@@ -6,8 +6,8 @@
 *@file      version.h
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
-*@date      15.02.2024
-*@version   V1.4.0
+*@date      28.09.2024
+*@version   V2.0.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -34,8 +34,8 @@
 /**
  *     Module version
  */
-#define VER_VER_MAJOR       ( 1 )       // TODO: Increase to V2.0.0
-#define VER_VER_MINOR       ( 4 )
+#define VER_VER_MAJOR       ( 2 )
+#define VER_VER_MINOR       ( 0 )
 #define VER_VER_DEVELOP     ( 0 )
 
 /**

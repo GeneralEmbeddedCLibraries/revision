@@ -5,13 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project/module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
-## V2.0.0 - xx.xx.2024
+## V2.0.0 - 28.09.2024
+
+### Added
+- New API function to get bootloader version (if present)
 
 ### Changes
  - Application header structure completely changed (therefore increased major version)
  - Application header is not fixed size of 256 bytes. Issues with vector offseting is fixed with
    proper linking and bootloader settings
-
 
 ---
 ## V1.4.0 - 15.02.2024
