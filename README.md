@@ -53,12 +53,11 @@ It is prefered to used "Semantic Versioning" (more about that [here](https://sem
  - TEST: Change after providing a special (usally for internal use only) SW in order to validate system design. Of course code must be still back-compatable
 
 ## **Image header**
-
-# TODO: Update that describtion!!!!
-
 Image header contains information about SW version, application size and output image (.hex file) CRC value. Therefore it can be used for data integrity validation. Checksum and application size makes end build application more suitable for bootloader support. Additionally SW version of running application can be acquired easily by looking into outputed .hex file at specific location all thanks to application header.
 
 Image header is a meta data for the binary image itself as it contains all the insights of the image. With a help of image header data integrity (crc) and authentication (signature) can be checked. 
+
+For more info about image header look at the [Revision_Specifications.xlsx](doc/Revision_Specifications.xlsx).
 
 ### Image header structure:
 
