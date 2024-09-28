@@ -5,7 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project/module adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
-## V1.4.0 - 15.02.2023
+## V2.0.0 - 28.09.2024
+
+### Notice
+Image (application) header is not back-compatible with old Revision module V1.x.x!!!
+
+### Added
+- New API function to get bootloader version (if present)
+
+### Changes
+ - Application header structure completely changed (therefore increased major version)
+ - Application header is now fixed size of 256 bytes. Issues with vector offseting is fixed with
+   proper linking and bootloader settings
+
+---
+## V1.4.0 - 15.02.2024
 
 ### Changes
  - Increased application header size to 512 bytes (0x200). That was issue with STM32G4 family, cousing interrupt misfireing

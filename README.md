@@ -14,10 +14,12 @@ root/revision/revision/"module_space"
 ## **API**
 | API Functions | Description | Prototype |
 | --- | ----------- | ----- |
-| **version_get_sw**            | Get SW version                  | uint32_t version_get_sw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |****
-| **version_get_hw**            | Get HW version                  | uint32_t version_get_hw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test) |
-| **version_get_sw_str**        | Get SW versioning string        | const char* version_get_sw_str(void) |
+| **version_get_sw**            | Get app SW version              | ver_t version_get_sw(void) |****
+| **version_get_hw**            | Get HW version                  | ver_t version_get_hw(void) |
+| **version_get_boot**          | Get boot SW version             | ver_t version_get_boot(void) |
+| **version_get_sw_str**        | Get app SW versioning string    | const char* version_get_sw_str(void) |
 | **version_get_hw_str**        | Get HW versioning string        | const char* version_get_hw_str(void) |
+| **version_get_boot_str**      | Get boot SW versioning string   | const char* version_get_boot_str(void) |
 | **version_get_proj_info_str** | Get project information string  | const char* version_get_proj_info_str(void) |
 
 ## **Define Software & Hardware version**
@@ -50,40 +52,67 @@ It is prefered to used "Semantic Versioning" (more about that [here](https://sem
  - DEVELOP: Change after fixing minor bugs and code must be still back-compatable
  - TEST: Change after providing a special (usally for internal use only) SW in order to validate system design. Of course code must be still back-compatable
 
-## **Application header**
-Application header contains information about SW version, application size and output image (.hex file) CRC value. Therefore it can be used for data integrity validation. Checksum and application size makes end build application more suitable for bootloader support. Additionally SW version of running application can be acquired easily by looking into outputed .hex file at specific location all thanks to application header.
+## **Image header**
+Image header contains information about SW version, application size and output image (.hex file) CRC value. Therefore it can be used for data integrity validation. Checksum and application size makes end build application more suitable for bootloader support. Additionally SW version of running application can be acquired easily by looking into outputed .hex file at specific location all thanks to application header.
 
-Revision module support two size of application header:
- 1. To use application header V1 (256 bytes in size) use Revision V1.3.0
- 2. To use application header V2 (512 bytes in size) use Revision V1.4.0
+Image header is a meta data for the binary image itself as it contains all the insights of the image. With a help of image header data integrity (crc) and authentication (signature) can be checked. 
 
-### Application header V2 structure:
+For more info about image header look at the [Revision_Specifications.xlsx](doc/Revision_Specifications.xlsx).
 
-![](doc/pic/Application_Header_Structure__V2.png)
+### Image header structure:
 
-### Definition of application header:
+![](doc/pic/Application_Header_Structure__NEW_V1.png)
+
+### Definition of image header:
 ```C
 /**
- *  Application header
+ *  Image header
  *
  * @note    Purpose of application header is to store informations
  *          of software in HEX output file at specific location. This
  *          gives you the insights of the application itself by looking
  *          only into output file such as Intel HEX type or binary.
  *
- *
- *  Size: 512 bytes
+ *  Size: 256 bytes
  */
 typedef struct __VER_PACKED__
 {
-    uint32_t    sw_ver;             /**<Software (application) version */
-    uint32_t    hw_ver;             /**<Hardware version */
-    uint32_t    app_size;           /**<Size of application in bytes - shall be calculated by post-build script */
-    uint32_t    app_crc;            /**<Application CRC32 - calculated by post-build script */
-    uint8_t     reserved[494];      /**<Reserved space in application header */
-    uint8_t     ver;                /**<Application header version */
-    uint8_t     crc;                /**<Application header CRC8 */
-} ver_app_header_t;
+    /**     Control fields
+     *
+     *  Sizeof: 8 bytes
+     *
+     *  @note   Are fixed, shall not be change during different versions of application header.
+     *          Can be added in reserved space.
+     */
+    struct
+    {
+        uint8_t     crc;                /**<Application header CRC8 */
+        uint8_t     ver;                /**<Application header version */
+        uint8_t     image_type;         /**<Image type. Shall be value of @ver_image_type_t. Filled by post-build script */
+        uint8_t     res[5];             /**<Reserved fields */
+    } ctrl;
+
+    /**     Data fields
+     *
+     *  Sizeof: 248 bytes
+     *
+     *  @note   Data fields can be re-sized between different versions of application header.
+     */
+    struct
+    {
+        uint32_t sw_ver;        /**<Software (application) version */
+        uint32_t hw_ver;        /**<Hardware version */
+        uint32_t image_size;    /**<Size of image in bytes - shall be calculated by post-build script */
+        uint32_t image_addr;    /**<Start address of image. Used only with "custom" image type */
+        uint32_t image_crc;     /**<Image CRC32- calculated by post-build script */
+        uint8_t  enc_type;      /**<Encryption type. Shall be value of @ver_enc_type_t. Filled by post-build script */
+        uint8_t  sig_type;      /**<Signature type. Shall be value of @ver_sig_type_t. Filled by post-build script */
+        uint8_t  signature[64]; /**<Image signature value. Filled by post-build script only. Used only for "sig_type" other than "none" */
+        uint8_t  hash[32];      /**<Image hash (SHA256). Filled by post-build script only */
+        uint8_t  git_sha[8];    /**<Git commit hash. Filled by post-build script only */
+        uint8_t  res[122];      /**<Reserved space in application header */
+    } data;
+} ver_image_header_t;
 ```
 
 ## **Configuration for arm-gcc toolchain**

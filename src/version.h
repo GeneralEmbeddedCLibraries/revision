@@ -6,8 +6,8 @@
 *@file      version.h
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
-*@date      15.02.2024
-*@version   V1.4.0
+*@date      28.09.2024
+*@version   V2.0.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -34,39 +34,125 @@
 /**
  *     Module version
  */
-#define VER_VER_MAJOR       ( 1 )
-#define VER_VER_MINOR       ( 4 )
+#define VER_VER_MAJOR       ( 2 )
+#define VER_VER_MINOR       ( 0 )
 #define VER_VER_DEVELOP     ( 0 )
 
 /**
- *  Application header
+ *  Image type
+ */
+typedef enum
+{
+    eVER_IMAGE_TYPE_APP = 0,    /**<Application */
+    eVER_IMAGE_TYPE_CUSTOM,     /**<Custom */
+
+    eVER_IMAGE_TYPE_NUM_OF,
+    eVER_IMAGE_TYPE_INVALID,
+} ver_image_type_t;
+
+/**
+ *  Encryption type
+ */
+typedef enum
+{
+    eVER_ENC_TYPE_NONE = 0,     /**<No encryption */
+    eVER_ENC_TYPE_AES_CTR,      /**<AES-CTR encryption type */
+
+    eVER_ENC_TYPE_NUM_OF,
+    eVER_ENC_TYPE_INVALID,
+} ver_enc_type_t;
+
+/**
+ *  Signature type
+ */
+typedef enum
+{
+    eVER_SIG_TYPE_NONE = 0,     /**<No encryption */
+    eVER_SIG_TYPE_ECSDA,        /**<ECSDA signature type */
+
+    eVER_SIG_TYPE_NUM_OF,
+    eVER_SIG_TYPE_INVALID,
+} ver_sig_type_t;
+
+/**
+ *  Image header
  *
  * @note    Purpose of application header is to store informations
  *          of software in HEX output file at specific location. This
  *          gives you the insights of the application itself by looking
  *          only into output file such as Intel HEX type or binary.
  *
- *
- *  Size: 512 bytes
+ *  Size: 256 bytes
  */
 typedef struct __VER_PACKED__
 {
-    uint32_t    sw_ver;             /**<Software (application) version */
-    uint32_t    hw_ver;             /**<Hardware version */
-    uint32_t    app_size;           /**<Size of application in bytes - shall be calculated by post-build script */
-    uint32_t    app_crc;            /**<Application CRC32 - calculated by post-build script */
-    uint8_t     reserved[494];      /**<Reserved space in application header */
-    uint8_t     ver;                /**<Application header version */
-    uint8_t     crc;                /**<Application header CRC8 */
-} ver_app_header_t;
+    /**     Control fields
+     *
+     *  Sizeof: 8 bytes
+     *
+     *  @note   Are fixed, shall not be change during different versions of application header.
+     *          Can be added in reserved space.
+     */
+    struct __VER_PACKED__
+    {
+        uint8_t     crc;                /**<Application header CRC8 */
+        uint8_t     ver;                /**<Application header version */
+        uint8_t     image_type;         /**<Image type. Shall be value of @ver_image_type_t. Filled by post-build script */
+        uint8_t     res[5];             /**<Reserved fields */
+    } ctrl;
+
+    /**     Data fields
+     *
+     *  Sizeof: 248 bytes
+     *
+     *  @note   Data fields can be re-sized between different versions of application header.
+     */
+    struct __VER_PACKED__
+    {
+        uint32_t sw_ver;        	/**<Software (application) version */
+        uint32_t hw_ver;        	/**<Hardware version */
+        uint32_t image_size;    	/**<Size of image in bytes - shall be calculated by post-build script */
+        uint32_t image_addr;    	/**<Start address of image. Used only with "custom" image type */
+        uint32_t image_crc;     	/**<Image CRC32- calculated by post-build script */
+        uint8_t  enc_type;      	/**<Encryption type. Shall be value of @ver_enc_type_t. Filled by post-build script */
+        uint8_t  sig_type;      	/**<Signature type. Shall be value of @ver_sig_type_t. Filled by post-build script */
+        uint8_t  signature[64]; 	/**<Image signature value. Filled by post-build script only. Used only for "sig_type" other than "none" */
+        uint8_t  hash[32];      	/**<Image hash (SHA256). Filled by post-build script only */
+        uint8_t  git_sha[8];    	/**<Git commit hash. Filled by post-build script only */
+        uint32_t enc_image_crc; 	/**<Encrypted image CRC32- calculated by post-build script  */
+        uint8_t  res[118];      	/**<Reserved space in application header */
+    } data;
+} ver_image_header_t;
+
+/**
+ *  Image header size check
+ */
+_Static_assert( 256 == sizeof(ver_image_header_t));
+
+/**
+ *  Semantic versioning
+ */
+typedef union
+{
+    struct
+    {
+        uint8_t test;  /**<Test SW version */
+        uint8_t dev;   /**<Develop SW version */
+        uint8_t min;   /**<Minor SW version */
+        uint8_t maj;   /**<Major SW version */
+    };
+    uint32_t U; /**<Complete version number, accessed as U32 */
+} ver_t;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions
 ////////////////////////////////////////////////////////////////////////////////
-uint32_t    version_get_sw              (uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
-uint32_t    version_get_hw              (uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test);
+ver_t       version_get_sw              (void);
+ver_t       version_get_hw              (void);
+ver_t       version_get_boot            (void);
 const char* version_get_sw_str          (void);
 const char* version_get_hw_str          (void);
+const char* version_get_boot_str        (void);
 const char* version_get_proj_info_str   (void);
 
 #endif // __VERSION_H_

@@ -6,8 +6,8 @@
 *@file      version.h
 *@brief     Revision of software & hardware
 *@author    Ziga Miklosic
-*@date      15.02.2024
-*@version   V1.4.0
+*@date      28.09.2024
+*@version   V2.0.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /*!
@@ -21,20 +21,37 @@
 ////////////////////////////////////////////////////////////////////////////////
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "version.h"
 
 #if ( 1 == VER_CFG_USE_PROJ_INFO_EN )
 #include "proj_info.h"
 #endif
 
+#if ( 1 == VER_CFG_BOOT_PRESENT )
+    #include "middleware/boot/boot/src/boot.h"
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
+#if ( 1 == VER_CFG_BOOT_PRESENT )
+    /**
+     *  Compatibility check with BOOT module
+     *
+     *  Support version V0.2.x up
+     */
+
+    // TODO: Update compatibility checks!
+    _Static_assert( 0 == BOOT_VER_MAJOR );
+    _Static_assert( 2 <= BOOT_VER_MINOR );
+#endif
+
 /**
- *  Application header version
+ *      Image header version
  */
-#define VER_APP_HEADER_VER          ( 2 )
+#define VER_IMAGE_HEADER_VER          ( 1 )
 
 /**
  *     Convert value to string
@@ -59,16 +76,28 @@ static const char *     gs_hw_ver_str   = "Hardware Version " VER_STR(VER_HW_MAJ
 static const uint32_t   gu32_hw_ver_num = (( VER_HW_MAJOR << 24 ) | ( VER_HW_MINOR << 16 ) | ( VER_HW_DEVELOP << 8 ) | ( VER_HW_TEST ));
 
 /**
- *     Application header informations
+ *     Image header informations
  */
-static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SECTION ))) g_app_header =
+static volatile const ver_image_header_t __attribute__ (( section( VER_IMAGE_HEAD_SECTION ))) g_image_header =
 {
-    .sw_ver     = gu32_sw_ver_num,
-    .hw_ver     = gu32_hw_ver_num,
-    .app_size   = 0,                    /* Calculated by post-build script */
-    .app_crc    = 0,                    /* Calculated by post-build script */
-    .ver        = VER_APP_HEADER_VER,
-    .crc        = 0,                    /* Calculated by post-build script */
+    .ctrl =
+    {
+        .crc = 0U,                       /**<Filled by post-build script */
+        .ver = VER_IMAGE_HEADER_VER,
+    },
+
+    .data =
+    {
+   		.sw_ver     = gu32_sw_ver_num,
+   		.hw_ver     = gu32_hw_ver_num,
+   		.image_size = 0U,               /**<Filled by post-build script */
+   		.image_crc  = 0U,               /**<Filled by post-build script */
+   		.enc_type   = 0U,               /**<Filled by post-build script */
+   		.sig_type   = 0U,               /**<Filled by post-build script */
+   		.signature  = {0},              /**<Filled by post-build script */
+   		.hash       = {0},              /**<Filled by post-build script */
+   		.git_sha    = {0},              /**<Filled by post-build script */
+    },
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -77,36 +106,29 @@ static volatile const ver_app_header_t __attribute__ (( section( VER_APP_HEAD_SE
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
+* @} <!-- END GROUP -->
+*/
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+*@addtogroup VERSION_API
+* @{ <!-- BEGIN GROUP -->
+*
+*   Following function are part of Version API.
+*/
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+/**
  *  @brief  Get software version
  *
- * @param[out]  p_major     - Pointer to major SW version
- * @param[out]  p_minor     - Pointer to minor SW version
- * @param[out]  p_develop   - Pointer to develop SW version
- * @param[out]  p_test      - Pointer to test SW version
- * @return      sw_ver      - Complete 32-bit number of SW version
+ * @return      Application software version
  */
 ////////////////////////////////////////////////////////////////////////////////
-uint32_t version_get_sw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test)
+ver_t version_get_sw(void)
 {
-    const uint32_t sw_ver = gu32_sw_ver_num;
-
-    if ( NULL != p_major )
-    {
-        *p_major = (uint8_t)(( gu32_sw_ver_num >> 24U ) & 0xFFU );
-    }
-    if ( NULL != p_minor )
-    {
-        *p_minor = (uint8_t)(( gu32_sw_ver_num >> 16U ) & 0xFFU );
-    }
-    if ( NULL != p_develop )
-    {
-        *p_develop = (uint8_t)(( gu32_sw_ver_num >> 8U ) & 0xFFU );
-    }
-    if ( NULL != p_test )
-    {
-        *p_test = (uint8_t)(( gu32_sw_ver_num >> 0U ) & 0xFFU );
-    }
-
+    const ver_t sw_ver = { .U = gu32_sw_ver_num };
     return sw_ver;
 }
 
@@ -114,35 +136,34 @@ uint32_t version_get_sw(uint8_t * const p_major, uint8_t * const p_minor, uint8_
 /**
  *  @brief  Get hardware version
  *
- * @param[out]  p_major     - Pointer to major HW version
- * @param[out]  p_minor     - Pointer to minor HW version
- * @param[out]  p_develop   - Pointer to develop HW version
- * @param[out]  p_test      - Pointer to test HW version
- * @return      sw_ver      - Complete 32-bit number of HW version
+ * @return      Hardware version
  */
 ////////////////////////////////////////////////////////////////////////////////
-uint32_t version_get_hw(uint8_t * const p_major, uint8_t * const p_minor, uint8_t * const p_develop, uint8_t * const p_test)
+ver_t version_get_hw(void)
 {
-    const uint32_t hw_ver = gu32_hw_ver_num;
-
-    if ( NULL != p_major )
-    {
-        *p_major = (uint8_t)(( gu32_hw_ver_num >> 24U ) & 0xFFU );
-    }
-    if ( NULL != p_minor )
-    {
-        *p_minor = (uint8_t)(( gu32_hw_ver_num >> 16U ) & 0xFFU );
-    }
-    if ( NULL != p_develop )
-    {
-        *p_develop = (uint8_t)(( gu32_hw_ver_num >> 8U ) & 0xFFU );
-    }
-    if ( NULL != p_test )
-    {
-        *p_test = (uint8_t)(( gu32_hw_ver_num >> 0U ) & 0xFFU );
-    }
-
+    const ver_t hw_ver = { .U = gu32_hw_ver_num };
     return hw_ver;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ *  @brief  Get bootloader software version
+ *
+ * @return      Bootloader SW version
+ */
+////////////////////////////////////////////////////////////////////////////////
+ver_t version_get_boot(void)
+{
+    ver_t boot_ver = { .U = 0 };
+
+    #if ( 1 == VER_CFG_BOOT_PRESENT )
+        if ( eBOOT_OK != boot_shared_mem_get_boot_ver( &boot_ver.U ))
+        {
+            boot_ver.U = 0;
+        }
+    #endif
+
+    return boot_ver;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -167,6 +188,27 @@ const char* version_get_sw_str(void)
 const char* version_get_hw_str(void)
 {
     return gs_hw_ver_str;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/**
+ *  @brief  Get bootloader SW version string
+ *
+ * @return  gs_hw_ver_str - Software version string
+ */
+////////////////////////////////////////////////////////////////////////////////
+const char* version_get_boot_str(void)
+{
+    const ver_t boot_ver = version_get_boot();
+    static char boot_ver_str[64] = "Bootloader not present!";
+
+    if ( 0 != boot_ver.U )
+    {
+        // Assembly boot version string
+        snprintf(boot_ver_str, sizeof(boot_ver_str), "Bootloader (SW) Version %d.%d.%d.%d", boot_ver.maj, boot_ver.min, boot_ver.dev, boot_ver.test );
+    }
+
+    return boot_ver_str;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
