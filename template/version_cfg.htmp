@@ -6,8 +6,8 @@
 *@file      version_cfg.h
 *@brief     Configuration file for revision of software & hardware
 *@author    Ziga Miklosic
-*@date      13.12.2022
-*@version	V1.2.1
+*@date      28.09.2024
+*@version   V2.0.0
 */
 ////////////////////////////////////////////////////////////////////////////////
 /**
@@ -21,7 +21,6 @@
 #define __VERSION_CFG_H_
 
 // USER CODE BEGIN...
-
 
 /******************************************************************************
  * 	SET SOFTWARE VERSION
@@ -39,7 +38,6 @@
 #define VER_HW_DEVELOP		0
 #define VER_HW_TEST			0
 
-
 /******************************************************************************
  * 	APPLICAION HEADER SETTINGS
  *****************************************************************************/
@@ -53,7 +51,6 @@
  *  Packet compiler directive
  */
 #define __VER_PACKED__                  __attribute__((__packed__))
-
 
 /******************************************************************************
  * 	PROJECT INFORMATIONS SETTINGS
