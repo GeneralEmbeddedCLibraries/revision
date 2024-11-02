@@ -40,12 +40,9 @@
     /**
      *  Compatibility check with BOOT module
      *
-     *  Support version V0.2.x up
+     *  Support version V1.x.x up
      */
-
-    // TODO: Update compatibility checks!
-    _Static_assert( 0 == BOOT_VER_MAJOR );
-    _Static_assert( 2 <= BOOT_VER_MINOR );
+    _Static_assert( 1 == BOOT_VER_MAJOR );
 #endif
 
 /**
