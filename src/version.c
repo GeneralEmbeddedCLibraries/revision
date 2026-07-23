@@ -1,4 +1,4 @@
-// Copyright (c) 2024 Ziga Miklosic
+// Copyright (c) 2026 Ziga Miklosic
 // All Rights Reserved
 // This software is under MIT licence (https://opensource.org/licenses/MIT)
 ////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ static const uint32_t   gu32_hw_ver_num = (( VER_HW_MAJOR << 24 ) | ( VER_HW_MIN
 /**
  *     Image header informations
  */
-static volatile const ver_image_header_t __attribute__ (( section( VER_IMAGE_HEAD_SECTION ))) g_image_header =
+static volatile const ver_image_header_t __attribute__ (( used, section( VER_IMAGE_HEAD_SECTION ))) g_image_header =
 {
     .ctrl =
     {

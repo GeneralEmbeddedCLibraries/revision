@@ -1,4 +1,4 @@
-// Copyright (c) 2024 Ziga Miklosic
+// Copyright (c) 2026 Ziga Miklosic
 // All Rights Reserved
 // This software is under MIT licence (https://opensource.org/licenses/MIT)
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,12 +17,13 @@
 *     Revision API
 */
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef __VERSION_H_
-#define __VERSION_H_
+#ifndef VERSION_H_
+#define VERSION_H_
 
 ////////////////////////////////////////////////////////////////////////////////
 // Includes
 ////////////////////////////////////////////////////////////////////////////////
+#include <assert.h>
 #include <stdint.h>
 
 #include "../../version_cfg.h"
@@ -127,7 +128,7 @@ typedef struct __VER_PACKED__
 /**
  *  Image header size check
  */
-_Static_assert( 256 == sizeof(ver_image_header_t));
+_Static_assert( 256 == sizeof(ver_image_header_t), "Unexpected size of version image header!" );
 
 /**
  *  Semantic versioning
@@ -155,7 +156,7 @@ const char* version_get_hw_str          (void);
 const char* version_get_boot_str        (void);
 const char* version_get_proj_info_str   (void);
 
-#endif // __VERSION_H_
+#endif // VERSION_H_
 
 ////////////////////////////////////////////////////////////////////////////////
 /**
